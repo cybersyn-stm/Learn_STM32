@@ -1,0 +1,6 @@
+-c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I ..\CMSIS -I ..\USER -I ..\FWLIB\inc -I ..\DRIVE
+-I "C:\Users\86137\Desktop\STM32 learn\Õ‚…Ë—ßœ∞\USART learning\PROJECT\RTE"
+-I C:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.4.1\Device\Include
+-I C:\Keil_v5\ARM\CMSIS\Include
+-D__UVISION_VERSION="518" -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER
+-o .\objects\ds18b29.o --omf_browse .\objects\ds18b29.crf --depend .\objects\ds18b29.d "..\DRIVE\DS18B29.c"
