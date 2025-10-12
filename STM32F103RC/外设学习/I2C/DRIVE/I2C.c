@@ -29,7 +29,13 @@ void I2C_ReadACK(void)
 	I2C_SCL0;
 	I2C_SDA0;
 	I2C_SCL1;
+	I2C_SCL0;
+}
+void I2C_ReadNACK(void)
+{
 	I2C_SDA1;
+	I2C_SCL1;
+	I2C_SCL0;
 }
 void I2C_WriteByte(uint8_t data)
 {
@@ -49,18 +55,35 @@ void I2C_WriteByte(uint8_t data)
 		I2C_SCL1;
 	}
 }
-void I2C_Write(uint8_t address,uint8_t data)
+uint8_t I2C_ReadByte(void)
+{
+	uint8_t i,redata = 0,x;
+	I2C_SDA1;
+	for(i=0;i<8;i++)
+	{
+		I2C_SCL0;
+		redata = redata<<1;
+		x = I2C_ReadSDA;
+		if(x == 1)
+		{
+			redata |= 0x01;
+		}
+		I2C_SCL1;
+	}
+	I2C_SCL0;
+	return redata;
+}
+void I2C_Write(uint8_t device_address,uint8_t address,uint8_t data)
 {
 	I2C_START();
-	I2C_WriteByte(0x78);
-	I2C_ReadACK();
-	I2C_WriteByte(address);
+	I2C_WriteByte(device_address);
 	I2C_ReadACK();
 	I2C_WriteByte(data);
 	I2C_ReadACK();
+	I2C_WriteByte(data);
+	I2C_ReadNACK();
 	I2C_STOP();
 }
-
 
 
 

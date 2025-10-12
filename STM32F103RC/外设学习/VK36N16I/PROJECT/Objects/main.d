@@ -28,3 +28,9 @@
 .\objects\main.o: ..\FWLIB\inc\stm32f10x_usart.h
 .\objects\main.o: ..\FWLIB\inc\stm32f10x_wwdg.h
 .\objects\main.o: ..\FWLIB\inc\misc.h
+.\objects\main.o: ..\DRIVE\GPIO.h
+.\objects\main.o: ..\DRIVE\RCC.h
+.\objects\main.o: ..\DRIVE\I2C.h
+.\objects\main.o: ..\DRIVE\USART.h
+.\objects\main.o: ..\DRIVE\TIM.h
+.\objects\main.o: ..\DRIVE\VK36N16I.h

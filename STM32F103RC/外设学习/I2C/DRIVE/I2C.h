@@ -19,7 +19,7 @@
 
 
 void I2C_GPIO_Init(void);
-void I2C_Write(uint8_t address,uint8_t data);
+void I2C_Write(uint8_t device_address,uint8_t address,uint8_t data);
 
 
 

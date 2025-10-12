@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Objects\Project.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\Project.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060061: Last Updated: Sun Oct 05 15:55:12 2025
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060061: Last Updated: Sun Oct 12 16:10:22 2025
 <BR><P>
 <H3>Maximum Stack Usage =         28 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -465,11 +465,11 @@ Global Symbols
 <P><STRONG><a name="[a]"></a>DebugMon_Handler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f10x_it.o(i.DebugMon_Handler))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f10x_hd.o(RESET)
 </UL>
-<P><STRONG><a name="[5e]"></a>GPIO_clock_init</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, gpio.o(i.GPIO_clock_init))
+<P><STRONG><a name="[5e]"></a>GPIO_clock_init</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, gpio.o(i.GPIO_clock_init))
 <BR><BR>[Called By]<UL><LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_init
 </UL>
 
-<P><STRONG><a name="[5d]"></a>GPIO_init</STRONG> (Thumb, 34 bytes, Stack size 4 bytes, gpio.o(i.GPIO_init))
+<P><STRONG><a name="[5d]"></a>GPIO_init</STRONG> (Thumb, 26 bytes, Stack size 4 bytes, gpio.o(i.GPIO_init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = GPIO_init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GPIO_clock_init
@@ -518,7 +518,7 @@ Global Symbols
 <LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[63]"></a>USART1_init</STRONG> (Thumb, 104 bytes, Stack size 0 bytes, usart.o(i.USART1_init))
+<P><STRONG><a name="[63]"></a>USART1_init</STRONG> (Thumb, 138 bytes, Stack size 0 bytes, usart.o(i.USART1_init))
 <BR><BR>[Called By]<UL><LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 

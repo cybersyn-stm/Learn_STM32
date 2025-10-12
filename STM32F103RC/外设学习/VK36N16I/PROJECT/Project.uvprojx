@@ -535,6 +535,38 @@
         </Group>
         <Group>
           <GroupName>DRIVE</GroupName>
+          <Files>
+            <File>
+              <FileName>GPIO.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\DRIVE\GPIO.c</FilePath>
+            </File>
+            <File>
+              <FileName>I2C.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\DRIVE\I2C.c</FilePath>
+            </File>
+            <File>
+              <FileName>RCC.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\DRIVE\RCC.c</FilePath>
+            </File>
+            <File>
+              <FileName>TIM.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\DRIVE\TIM.c</FilePath>
+            </File>
+            <File>
+              <FileName>USART.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\DRIVE\USART.c</FilePath>
+            </File>
+            <File>
+              <FileName>VK36N16I.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\DRIVE\VK36N16I.c</FilePath>
+            </File>
+          </Files>
         </Group>
       </Groups>
     </Target>
