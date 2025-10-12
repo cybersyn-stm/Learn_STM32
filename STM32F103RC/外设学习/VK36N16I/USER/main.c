@@ -5,6 +5,7 @@
 #include "TIM.h"
 #include "USART.h"
 #include "VK36N16I.h"
+uint8_t key;
 int main()
 {
 	GPIO_init();
@@ -13,8 +14,11 @@ int main()
 	I2C_GPIO_Init();
 	while(1)
 	{
-		Systick_ms(1000);
-		Key_return();
+		key = Key_Scan();
+		if(key!=125)
+		{
+			USART1_SendChar(key);
+		}
 	}
 }	
 
