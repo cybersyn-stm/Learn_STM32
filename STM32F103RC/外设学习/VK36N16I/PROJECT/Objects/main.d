@@ -34,3 +34,4 @@
 .\objects\main.o: ..\DRIVE\USART.h
 .\objects\main.o: ..\DRIVE\TIM.h
 .\objects\main.o: ..\DRIVE\VK36N16I.h
+.\objects\main.o: ..\DRIVE\TM1650.h

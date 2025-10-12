@@ -33,6 +33,7 @@
 ".\objects\tim.o"
 ".\objects\usart.o"
 ".\objects\vk36n16i.o"
+".\objects\tm1650.o"
 --strict --scatter ".\Objects\Project.sct"
 --summary_stderr --info summarysizes --map --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

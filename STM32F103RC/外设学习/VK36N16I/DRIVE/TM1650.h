@@ -1,5 +1,5 @@
-#ifndef __I2C_H_
-#define __I2C_H_
+#ifndef __TM1650C_H_
+#define __TM1650C_H_
 
 #include "stm32f10x.h"
 #include "RCC.h"
@@ -18,8 +18,8 @@
 #define I2C_ReadSDA GPIO_ReadInputDataBit(I2C_SDA_GPIO,I2C_SDA_Pin)
 
 
-void I2C_GPIO_Init(void);
-void I2C_Write(uint8_t address,uint8_t data);
+void I2C_1650GPIO_Init(void);
+void I2C_Write_1650(uint8_t address,uint8_t data);
 
 
 

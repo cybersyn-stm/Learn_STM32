@@ -1,7 +1,7 @@
 #include "USART.h"
 void USART1_init(void)
 {
-	USART1->BRR = ((72000000/(9600*16))<<4);
+	USART1->BRR = ((72000000/(4800*16))<<4);
 	USART1->CR1 &= ~(1<<12);
 	USART1->CR2 &= ~USART_CR2_STOP;
 	USART1->CR1 &= ~(1<<10);

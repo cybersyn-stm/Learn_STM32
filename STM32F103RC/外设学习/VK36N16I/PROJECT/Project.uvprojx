@@ -566,6 +566,11 @@
               <FileType>1</FileType>
               <FilePath>..\DRIVE\VK36N16I.c</FilePath>
             </File>
+            <File>
+              <FileName>TM1650.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\DRIVE\TM1650.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
