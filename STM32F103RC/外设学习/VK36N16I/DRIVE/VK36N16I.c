@@ -1,4 +1,8 @@
 #include "VK36N16I.h"
+void VK36N16I_init()
+{
+	I2C_GPIO_Init();
+}
 uint16_t Key_Read(uint8_t device_address)
 {
 	uint16_t low_data = 0,high_data = 0,return_data;
