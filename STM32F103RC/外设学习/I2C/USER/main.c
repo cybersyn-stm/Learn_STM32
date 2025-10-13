@@ -10,6 +10,8 @@ int main()
 	RCC_init();
 	USART1_init();
 	I2C_GPIO_Init();
+	I2C_Write(0x78,0x00,0xA5);
+	I2C_Write(0x78,0x00,0xAF);
 	while(1)
 	{
 		
