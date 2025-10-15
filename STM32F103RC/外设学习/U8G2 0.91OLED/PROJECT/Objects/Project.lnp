@@ -60,7 +60,6 @@
 ".\objects\u8x8_byte.o"
 ".\objects\u8x8_cad.o"
 ".\objects\u8x8_capture.o"
-".\objects\u8x8_d_ssd1306_128x32_2.o"
 ".\objects\u8x8_debounce.o"
 ".\objects\u8x8_display.o"
 ".\objects\u8x8_fonts.o"
@@ -72,6 +71,7 @@
 ".\objects\u8x8_string.o"
 ".\objects\u8x8_u8toa.o"
 ".\objects\u8x8_u16toa.o"
+".\objects\u8x8_d_ssd1306_128x64_noname.o"
 --library_type=microlib --strict --scatter ".\Objects\Project.sct"
 --summary_stderr --info summarysizes --map --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

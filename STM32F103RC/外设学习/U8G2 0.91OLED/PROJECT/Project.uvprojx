@@ -707,11 +707,6 @@
               <FilePath>..\u8g2\u8x8_capture.c</FilePath>
             </File>
             <File>
-              <FileName>u8x8_d_ssd1306_128x32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\u8g2\u8x8_d_ssd1306_128x32.c</FilePath>
-            </File>
-            <File>
               <FileName>u8x8_debounce.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\u8g2\u8x8_debounce.c</FilePath>
@@ -765,6 +760,11 @@
               <FileName>u8x8_u16toa.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\u8g2\u8x8_u16toa.c</FilePath>
+            </File>
+            <File>
+              <FileName>u8x8_d_ssd1306_128x64_noname.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\u8g2-master\csrc\u8x8_d_ssd1306_128x64_noname.c</FilePath>
             </File>
           </Files>
         </Group>
