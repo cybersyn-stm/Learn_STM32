@@ -97,9 +97,9 @@ void ssd1306_init(void)
 	u8g2_t u8g2;
 	u8g2_init(&u8g2);
 	u8g2_SetFont(&u8g2, u8g2_font_u8glib_4_tf);
-//	u8g2_DrawStr(&u8g2, 0, 4, "Hello,world!");
-//	u8g2_DrawStr(&u8g2, 0, 9, "I hate this world!!!!");
-	 u8g2_DrawXBM(&u8g2, 0, 0, 64, 64, bmp1);
+	u8g2_DrawXBM(&u8g2, 40, 0, 64, 64, bmp1);
+	u8g2_DrawStr(&u8g2, 0, 4, "Hello,world.");
+	u8g2_DrawStr(&u8g2, 0, 9, "I hate this world.");
 	u8g2_SendBuffer(&u8g2);
 }
 int main()
