@@ -1,0 +1,235 @@
+version: "4.1"
+name: Project
+type: ARM
+deviceName: STM32F103RC
+packDir: .pack/Keil/STM32F1xx_DFP.2.3.0
+srcDirs: []
+virtualFolder:
+  name: <virtual_root>
+  files: []
+  folders:
+    - name: CMSIS
+      files:
+        - path: ../CMSIS/core_cm3.c
+      folders: []
+    - name: FWILB
+      files:
+        - path: ../FWLIB/src/misc.c
+        - path: ../FWLIB/src/stm32f10x_adc.c
+        - path: ../FWLIB/src/stm32f10x_bkp.c
+        - path: ../FWLIB/src/stm32f10x_can.c
+        - path: ../FWLIB/src/stm32f10x_cec.c
+        - path: ../FWLIB/src/stm32f10x_crc.c
+        - path: ../FWLIB/src/stm32f10x_dac.c
+        - path: ../FWLIB/src/stm32f10x_dbgmcu.c
+        - path: ../FWLIB/src/stm32f10x_dma.c
+        - path: ../FWLIB/src/stm32f10x_exti.c
+        - path: ../FWLIB/src/stm32f10x_flash.c
+        - path: ../FWLIB/src/stm32f10x_fsmc.c
+        - path: ../FWLIB/src/stm32f10x_gpio.c
+        - path: ../FWLIB/src/stm32f10x_i2c.c
+        - path: ../FWLIB/src/stm32f10x_iwdg.c
+        - path: ../FWLIB/src/stm32f10x_pwr.c
+        - path: ../FWLIB/src/stm32f10x_rcc.c
+        - path: ../FWLIB/src/stm32f10x_rtc.c
+        - path: ../FWLIB/src/stm32f10x_sdio.c
+        - path: ../FWLIB/src/stm32f10x_spi.c
+        - path: ../FWLIB/src/stm32f10x_tim.c
+        - path: ../FWLIB/src/stm32f10x_usart.c
+        - path: ../FWLIB/src/stm32f10x_wwdg.c
+      folders: []
+    - name: USER
+      files:
+        - path: ../USER/main.c
+        - path: ../USER/stm32f10x_it.c
+        - path: ../USER/system_stm32f10x.c
+      folders: []
+    - name: STARTUP
+      files:
+        - path: ../CMSIS/startup_stm32f10x_hd.s
+      folders: []
+    - name: DRIVE
+      files:
+        - path: ../DRIVE/GPIO.c
+        - path: ../DRIVE/RCC.c
+        - path: ../DRIVE/USART.c
+      folders: []
+    - name: U8G2
+      files:
+        - path: ../u8g2/mui.c
+        - path: ../u8g2/mui_u8g2.c
+        - path: ../u8g2/u8g2_arc.c
+        - path: ../u8g2/u8g2_bitmap.c
+        - path: ../u8g2/u8g2_box.c
+        - path: ../u8g2/u8g2_buffer.c
+        - path: ../u8g2/u8g2_button.c
+        - path: ../u8g2/u8g2_circle.c
+        - path: ../u8g2/u8g2_cleardisplay.c
+        - path: ../u8g2/u8g2_d_memory.c
+        - path: ../u8g2/u8g2_d_setup.c
+        - path: ../u8g2/u8g2_font.c
+        - path: ../u8g2/u8g2_fonts.c
+        - path: ../u8g2/u8g2_hvline.c
+        - path: ../u8g2/u8g2_input_value.c
+        - path: ../u8g2/u8g2_intersection.c
+        - path: ../u8g2/u8g2_kerning.c
+        - path: ../u8g2/u8g2_line.c
+        - path: ../u8g2/u8g2_ll_hvline.c
+        - path: ../u8g2/u8g2_message.c
+        - path: ../u8g2/u8g2_polygon.c
+        - path: ../u8g2/u8g2_selection_list.c
+        - path: ../u8g2/u8g2_setup.c
+        - path: ../u8g2/u8log.c
+        - path: ../u8g2/u8log_u8g2.c
+        - path: ../u8g2/u8log_u8x8.c
+        - path: ../u8g2/u8x8_8x8.c
+        - path: ../u8g2/u8x8_byte.c
+        - path: ../u8g2/u8x8_cad.c
+        - path: ../u8g2/u8x8_capture.c
+        - path: ../u8g2/u8x8_debounce.c
+        - path: ../u8g2/u8x8_display.c
+        - path: ../u8g2/u8x8_fonts.c
+        - path: ../u8g2/u8x8_gpio.c
+        - path: ../u8g2/u8x8_input_value.c
+        - path: ../u8g2/u8x8_message.c
+        - path: ../u8g2/u8x8_selection_list.c
+        - path: ../u8g2/u8x8_setup.c
+        - path: ../u8g2/u8x8_string.c
+        - path: ../u8g2/u8x8_u8toa.c
+        - path: ../u8g2/u8x8_u16toa.c
+        - path: ../../../../../u8g2-master/csrc/u8x8_d_ssd1306_128x64_noname.c
+      folders: []
+dependenceList: []
+outDir: build
+miscInfo:
+  uid: 01ebaa2b66bf8afa3784656bc033435f
+targets:
+  Target 1:
+    cppPreprocessAttrs:
+      defineList:
+        - USE_STDPERIPH_DRIVER
+        - STM32F10X_HD
+      incList:
+        - .
+        - ../CMSIS
+        - ../USER
+        - ../FWLIB/inc
+        - ../DRIVE
+        - ../u8g2
+        - ../STARTUP
+      libList: []
+    excludeList: []
+    toolchain: AC5
+    toolchainConfigMap:
+      AC5:
+        archExtensions: ""
+        cpuType: Cortex-M3
+        floatingPointHardware: none
+        options:
+          version: 4
+          afterBuildTasks: []
+          asm-compiler: {}
+          beforeBuildTasks: []
+          c/cpp-compiler:
+            CXX_FLAGS: --c99 -D__MICROLIB
+            C_FLAGS: --c99 -D__MICROLIB
+            c99-mode: true
+            one-elf-section-per-function: true
+            optimization: level-0
+            warnings: all-warnings
+          global:
+            output-debug-info: enable
+            use-microLIB: true
+          linker:
+            $outputTaskExcludes:
+              - .bin
+            output-format: elf
+            ro-base: "0x08000000"
+            rw-base: "0x20000000"
+            xo-base: ""
+        scatterFilePath: ""
+        storageLayout:
+          RAM:
+            - id: 1
+              isChecked: false
+              mem:
+                size: "0x0"
+                startAddr: "0x0"
+              noInit: false
+              tag: RAM
+            - id: 2
+              isChecked: false
+              mem:
+                size: "0x0"
+                startAddr: "0x0"
+              noInit: false
+              tag: RAM
+            - id: 3
+              isChecked: false
+              mem:
+                size: "0x0"
+                startAddr: "0x0"
+              noInit: false
+              tag: RAM
+            - id: 1
+              isChecked: true
+              mem:
+                size: "0xc000"
+                startAddr: "0x20000000"
+              noInit: false
+              tag: IRAM
+            - id: 2
+              isChecked: false
+              mem:
+                size: "0x0"
+                startAddr: "0x0"
+              noInit: false
+              tag: IRAM
+          ROM:
+            - id: 1
+              isChecked: false
+              isStartup: false
+              mem:
+                size: "0x0"
+                startAddr: "0x0"
+              tag: ROM
+            - id: 2
+              isChecked: false
+              isStartup: false
+              mem:
+                size: "0x0"
+                startAddr: "0x0"
+              tag: ROM
+            - id: 3
+              isChecked: false
+              isStartup: false
+              mem:
+                size: "0x0"
+                startAddr: "0x0"
+              tag: ROM
+            - id: 1
+              isChecked: true
+              isStartup: true
+              mem:
+                size: "0x40000"
+                startAddr: "0x8000000"
+              tag: IROM
+            - id: 2
+              isChecked: false
+              isStartup: false
+              mem:
+                size: "0x0"
+                startAddr: "0x0"
+              tag: IROM
+        useCustomScatterFile: false
+    uploadConfigMap:
+      JLink:
+        baseAddr: ""
+        bin: ""
+        cpuInfo:
+          cpuName: STM32F103RC
+          vendor: ST
+        otherCmds: ""
+        proType: 0
+        speed: 8000
+    uploader: JLink
