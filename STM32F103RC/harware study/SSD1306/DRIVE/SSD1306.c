@@ -25,39 +25,39 @@ void SSD1306_Init(void)
 {
 	I2C_GPIO_Init();
 	SSD1306_Command(0XAE);
-	
-	SSD1306_Command(0XD5);
-	SSD1306_Command(0X80);
-	
-	SSD1306_Command(0XA8);
-	SSD1306_Command(0X3F);
-	
-	SSD1306_Command(0XD3);
-	SSD1306_Command(0X00);
-	
-	SSD1306_Command(0X40);
-	SSD1306_Command(0XA1);
+//	
+//	SSD1306_Command(0XD5);
+//	SSD1306_Command(0X80);
+//	
+//	SSD1306_Command(0XA8);
+//	SSD1306_Command(0X3F);
+//	
+//	SSD1306_Command(0XD3);
+//	SSD1306_Command(0X00);
+//	
+//	SSD1306_Command(0X40);
+//	SSD1306_Command(0XA1);
 
-	SSD1306_Command(0XC8);
-	SSD1306_Command(0XDA);
-	
-	SSD1306_Command(0X12);
-	SSD1306_Command(0X81);
-	
-	SSD1306_Command(0XCF);
-	SSD1306_Command(0XD9);
-	
-	SSD1306_Command(0XF1);
-	SSD1306_Command(0XDB);
-	
-	SSD1306_Command(0X30);
-	SSD1306_Command(0XA5);
-	
-	SSD1306_Command(0XA6);
-	SSD1306_Command(0X8D);
-	
-	SSD1306_Command(0X14);
-	SSD1306_Command(0XAF);
+//	SSD1306_Command(0XC8);
+//	SSD1306_Command(0XDA);
+//	
+//	SSD1306_Command(0X12);
+//	SSD1306_Command(0X81);
+//	
+//	SSD1306_Command(0XCF);
+//	SSD1306_Command(0XD9);
+//	
+//	SSD1306_Command(0XF1);
+//	SSD1306_Command(0XDB);
+//	
+//	SSD1306_Command(0X30);
+//	SSD1306_Command(0XA5);
+//	
+//	SSD1306_Command(0XA6);
+//	SSD1306_Command(0X8D);
+//	
+//	SSD1306_Command(0X14);
+//	SSD1306_Command(0XAF);
 
 }
 

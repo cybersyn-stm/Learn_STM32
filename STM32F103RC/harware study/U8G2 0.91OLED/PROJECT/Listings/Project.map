@@ -67,12 +67,12 @@ Section Cross References
     main.o(i.main) refers to gpio.o(i.GPIO_init) for GPIO_init
     main.o(i.main) refers to usart.o(i.USART1_init) for USART1_init
     main.o(i.main) refers to main.o(i.ssd1306_init) for ssd1306_init
+    main.o(i.main) refers to stm32f10x_rcc.o(i.RCC_GetClocksFreq) for RCC_GetClocksFreq
+    main.o(i.main) refers to main.o(i.u8g2_loop) for u8g2_loop
     main.o(i.ssd1306_init) refers to main.o(i.u8g2_init) for u8g2_init
     main.o(i.ssd1306_init) refers to u8g2_font.o(i.u8g2_SetFont) for u8g2_SetFont
-    main.o(i.ssd1306_init) refers to u8g2_bitmap.o(i.u8g2_DrawXBM) for u8g2_DrawXBM
-    main.o(i.ssd1306_init) refers to u8g2_buffer.o(i.u8g2_SendBuffer) for u8g2_SendBuffer
-    main.o(i.ssd1306_init) refers to u8g2_fonts.o(.constdata) for u8g2_font_u8glib_4_tf
-    main.o(i.ssd1306_init) refers to main.o(.constdata) for bmp1
+    main.o(i.ssd1306_init) refers to main.o(.bss) for u8g2
+    main.o(i.ssd1306_init) refers to u8g2_fonts.o(.constdata) for u8g2_font_7x13_te
     main.o(i.u8g2_init) refers to stm32f10x_rcc.o(i.RCC_APB2PeriphClockCmd) for RCC_APB2PeriphClockCmd
     main.o(i.u8g2_init) refers to stm32f10x_gpio.o(i.GPIO_Init) for GPIO_Init
     main.o(i.u8g2_init) refers to u8g2_d_setup.o(i.u8g2_Setup_ssd1306_i2c_128x64_noname_f) for u8g2_Setup_ssd1306_i2c_128x64_noname_f
@@ -82,8 +82,11 @@ Section Cross References
     main.o(i.u8g2_init) refers to main.o(i.u8x8_gpio_and_delay) for u8x8_gpio_and_delay
     main.o(i.u8g2_init) refers to u8x8_byte.o(i.u8x8_byte_sw_i2c) for u8x8_byte_sw_i2c
     main.o(i.u8g2_init) refers to u8g2_setup.o(.constdata) for u8g2_cb_r0
-    main.o(i.u8x8_gpio_and_delay) refers to rcc.o(i.Systick_ms) for Systick_ms
-    main.o(i.u8x8_gpio_and_delay) refers to rcc.o(i.Systick_us) for Systick_us
+    main.o(i.u8g2_loop) refers to stm32f10x_rcc.o(i.RCC_GetClocksFreq) for RCC_GetClocksFreq
+    main.o(i.u8g2_loop) refers to u8g2_buffer.o(i.u8g2_ClearBuffer) for u8g2_ClearBuffer
+    main.o(i.u8g2_loop) refers to u8g2_font.o(i.u8g2_DrawStr) for u8g2_DrawStr
+    main.o(i.u8g2_loop) refers to u8g2_buffer.o(i.u8g2_SendBuffer) for u8g2_SendBuffer
+    main.o(i.u8g2_loop) refers to main.o(.bss) for u8g2
     main.o(i.u8x8_gpio_and_delay) refers to stm32f10x_gpio.o(i.GPIO_SetBits) for GPIO_SetBits
     main.o(i.u8x8_gpio_and_delay) refers to stm32f10x_gpio.o(i.GPIO_ResetBits) for GPIO_ResetBits
     system_stm32f10x.o(i.SetSysClock) refers to system_stm32f10x.o(i.SetSysClockTo72) for SetSysClockTo72
@@ -1229,7 +1232,6 @@ Removing Unused input sections from the image.
     Removing stm32f10x_rcc.o(i.RCC_ClearITPendingBit), (12 bytes).
     Removing stm32f10x_rcc.o(i.RCC_ClockSecuritySystemCmd), (12 bytes).
     Removing stm32f10x_rcc.o(i.RCC_DeInit), (76 bytes).
-    Removing stm32f10x_rcc.o(i.RCC_GetClocksFreq), (212 bytes).
     Removing stm32f10x_rcc.o(i.RCC_GetFlagStatus), (60 bytes).
     Removing stm32f10x_rcc.o(i.RCC_GetITStatus), (24 bytes).
     Removing stm32f10x_rcc.o(i.RCC_GetSYSCLKSource), (16 bytes).
@@ -1249,7 +1251,6 @@ Removing Unused input sections from the image.
     Removing stm32f10x_rcc.o(i.RCC_SYSCLKConfig), (24 bytes).
     Removing stm32f10x_rcc.o(i.RCC_USBCLKConfig), (12 bytes).
     Removing stm32f10x_rcc.o(i.RCC_WaitForHSEStartUp), (56 bytes).
-    Removing stm32f10x_rcc.o(.data), (20 bytes).
     Removing stm32f10x_rtc.o(i.RTC_ClearFlag), (16 bytes).
     Removing stm32f10x_rtc.o(i.RTC_ClearITPendingBit), (16 bytes).
     Removing stm32f10x_rtc.o(i.RTC_EnterConfigMode), (20 bytes).
@@ -1445,9 +1446,12 @@ Removing Unused input sections from the image.
     Removing stm32f10x_wwdg.o(i.WWDG_SetCounter), (16 bytes).
     Removing stm32f10x_wwdg.o(i.WWDG_SetPrescaler), (24 bytes).
     Removing stm32f10x_wwdg.o(i.WWDG_SetWindowValue), (40 bytes).
+    Removing main.o(.constdata), (296 bytes).
     Removing system_stm32f10x.o(i.SystemCoreClockUpdate), (164 bytes).
     Removing system_stm32f10x.o(.data), (20 bytes).
     Removing startup_stm32f10x_hd.o(HEAP), (512 bytes).
+    Removing rcc.o(i.Systick_ms), (22 bytes).
+    Removing rcc.o(i.Systick_us), (80 bytes).
     Removing usart.o(i.USART1_SendChar), (40 bytes).
     Removing mui.o(i.mui_Draw), (20 bytes).
     Removing mui.o(i.mui_EnterForm), (96 bytes).
@@ -1583,8 +1587,10 @@ Removing Unused input sections from the image.
     Removing u8g2_arc.o(i.u8g2_DrawArc), (70 bytes).
     Removing u8g2_arc.o(i.u8g2_draw_arc), (600 bytes).
     Removing u8g2_bitmap.o(i.u8g2_DrawBitmap), (90 bytes).
+    Removing u8g2_bitmap.o(i.u8g2_DrawHXBM), (232 bytes).
     Removing u8g2_bitmap.o(i.u8g2_DrawHXBMP), (232 bytes).
     Removing u8g2_bitmap.o(i.u8g2_DrawHorizontalBitmap), (152 bytes).
+    Removing u8g2_bitmap.o(i.u8g2_DrawXBM), (88 bytes).
     Removing u8g2_bitmap.o(i.u8g2_DrawXBMP), (88 bytes).
     Removing u8g2_bitmap.o(i.u8g2_SetBitmapMode), (6 bytes).
     Removing u8g2_box.o(i.u8g2_DrawBox), (74 bytes).
@@ -1617,10 +1623,8 @@ Removing Unused input sections from the image.
     Removing u8g2_cleardisplay.o(i.u8g2_ClearDisplay), (32 bytes).
     Removing u8g2_font.o(i.u8g2_DrawExtUTF8), (180 bytes).
     Removing u8g2_font.o(i.u8g2_DrawExtendedUTF8), (188 bytes).
-    Removing u8g2_font.o(i.u8g2_DrawGlyph), (98 bytes).
     Removing u8g2_font.o(i.u8g2_DrawGlyphX2), (42 bytes).
     Removing u8g2_font.o(i.u8g2_DrawHB), (78 bytes).
-    Removing u8g2_font.o(i.u8g2_DrawStr), (36 bytes).
     Removing u8g2_font.o(i.u8g2_DrawStrX2), (36 bytes).
     Removing u8g2_font.o(i.u8g2_DrawUTF8), (36 bytes).
     Removing u8g2_font.o(i.u8g2_DrawUTF8X2), (36 bytes).
@@ -1647,9 +1651,6 @@ Removing Unused input sections from the image.
     Removing u8g2_font.o(i.u8g2_SetFontRefHeightAll), (18 bytes).
     Removing u8g2_font.o(i.u8g2_SetFontRefHeightExtendedText), (18 bytes).
     Removing u8g2_font.o(i.u8g2_SetFontRefHeightText), (18 bytes).
-    Removing u8g2_font.o(i.u8g2_add_vector_x), (42 bytes).
-    Removing u8g2_font.o(i.u8g2_add_vector_y), (42 bytes).
-    Removing u8g2_font.o(i.u8g2_draw_string), (144 bytes).
     Removing u8g2_font.o(i.u8g2_draw_string_2x), (94 bytes).
     Removing u8g2_font.o(i.u8g2_font_2x_decode_glyph), (246 bytes).
     Removing u8g2_font.o(i.u8g2_font_2x_decode_len), (212 bytes).
@@ -1657,13 +1658,6 @@ Removing Unused input sections from the image.
     Removing u8g2_font.o(i.u8g2_font_calc_vref_bottom), (10 bytes).
     Removing u8g2_font.o(i.u8g2_font_calc_vref_center), (32 bytes).
     Removing u8g2_font.o(i.u8g2_font_calc_vref_top), (14 bytes).
-    Removing u8g2_font.o(i.u8g2_font_decode_get_signed_bits), (36 bytes).
-    Removing u8g2_font.o(i.u8g2_font_decode_get_unsigned_bits), (66 bytes).
-    Removing u8g2_font.o(i.u8g2_font_decode_glyph), (386 bytes).
-    Removing u8g2_font.o(i.u8g2_font_decode_len), (176 bytes).
-    Removing u8g2_font.o(i.u8g2_font_draw_glyph), (58 bytes).
-    Removing u8g2_font.o(i.u8g2_font_get_glyph_data), (146 bytes).
-    Removing u8g2_font.o(i.u8g2_font_setup_decode), (64 bytes).
     Removing u8g2_font.o(i.u8g2_is_all_valid), (64 bytes).
     Removing u8g2_font.o(i.u8g2_string_width), (138 bytes).
     Removing u8g2_hvline.o(i.u8g2_DrawHLine), (28 bytes).
@@ -1737,7 +1731,6 @@ Removing Unused input sections from the image.
     Removing u8x8_8x8.o(i.u8x8_DrawUTF8), (36 bytes).
     Removing u8x8_8x8.o(i.u8x8_GetUTF8Len), (58 bytes).
     Removing u8x8_8x8.o(i.u8x8_SetFont), (4 bytes).
-    Removing u8x8_8x8.o(i.u8x8_ascii_next), (18 bytes).
     Removing u8x8_8x8.o(i.u8x8_draw_1x2_string), (96 bytes).
     Removing u8x8_8x8.o(i.u8x8_draw_1x2_subglyph), (102 bytes).
     Removing u8x8_8x8.o(i.u8x8_draw_2x2_string), (104 bytes).
@@ -1746,7 +1739,6 @@ Removing Unused input sections from the image.
     Removing u8x8_8x8.o(i.u8x8_get_glyph_data), (202 bytes).
     Removing u8x8_8x8.o(i.u8x8_upscale_buf), (28 bytes).
     Removing u8x8_8x8.o(i.u8x8_upscale_byte), (42 bytes).
-    Removing u8x8_8x8.o(i.u8x8_utf8_init), (8 bytes).
     Removing u8x8_8x8.o(i.u8x8_utf8_next), (156 bytes).
     Removing u8x8_byte.o(i.u8x8_byte_3wire_sw_spi), (304 bytes).
     Removing u8x8_byte.o(i.u8x8_byte_4wire_sw_spi), (288 bytes).
@@ -1824,7 +1816,7 @@ Removing Unused input sections from the image.
     Removing u8x8_d_ssd1306_128x64_noname.o(i.u8x8_d_ssd1306_128x64_vcomh0), (84 bytes).
     Removing u8x8_d_ssd1306_128x64_noname.o(i.u8x8_d_ssd1312_128x64_noname), (132 bytes).
 
-848 unused section(s) (total 541345 bytes) removed from the image.
+837 unused section(s) (total 540511 bytes) removed from the image.
 
 ==============================================================================
 
@@ -1834,19 +1826,19 @@ Image Symbol Table
 
     Symbol Name                              Value     Ov Type        Size  Object(Section)
 
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10b.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry8b.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry9b.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry9a.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry8a.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry7b.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry7a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10b.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry9b.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry11a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry2.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry11b.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry5.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry2.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10a.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry9a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry8a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry8b.o ABSOLUTE
     ../clib/microlib/string/memcpy.c         0x00000000   Number         0  memcpya.o ABSOLUTE
     ../clib/microlib/string/memcpy.c         0x00000000   Number         0  memcpyb.o ABSOLUTE
     ../clib/microlib/string/memset.c         0x00000000   Number         0  memseta.o ABSOLUTE
@@ -1953,149 +1945,166 @@ Image Symbol Table
     i.NMI_Handler                            0x08000320   Section        0  stm32f10x_it.o(i.NMI_Handler)
     i.PendSV_Handler                         0x08000322   Section        0  stm32f10x_it.o(i.PendSV_Handler)
     i.RCC_APB2PeriphClockCmd                 0x08000324   Section        0  stm32f10x_rcc.o(i.RCC_APB2PeriphClockCmd)
-    i.RCC_init                               0x08000344   Section        0  rcc.o(i.RCC_init)
-    i.SVC_Handler                            0x08000394   Section        0  stm32f10x_it.o(i.SVC_Handler)
-    i.SetSysClock                            0x08000396   Section        0  system_stm32f10x.o(i.SetSysClock)
-    SetSysClock                              0x08000397   Thumb Code     8  system_stm32f10x.o(i.SetSysClock)
-    i.SetSysClockTo72                        0x080003a0   Section        0  system_stm32f10x.o(i.SetSysClockTo72)
-    SetSysClockTo72                          0x080003a1   Thumb Code   214  system_stm32f10x.o(i.SetSysClockTo72)
-    i.SysTick_Handler                        0x08000480   Section        0  stm32f10x_it.o(i.SysTick_Handler)
-    i.SystemInit                             0x08000484   Section        0  system_stm32f10x.o(i.SystemInit)
-    i.Systick_ms                             0x080004e4   Section        0  rcc.o(i.Systick_ms)
-    i.Systick_us                             0x080004fa   Section        0  rcc.o(i.Systick_us)
-    i.USART1_init                            0x0800054c   Section        0  usart.o(i.USART1_init)
-    i.UsageFault_Handler                     0x080005c4   Section        0  stm32f10x_it.o(i.UsageFault_Handler)
-    i.__scatterload_copy                     0x080005c8   Section       14  handlers.o(i.__scatterload_copy)
-    i.__scatterload_null                     0x080005d6   Section        2  handlers.o(i.__scatterload_null)
-    i.__scatterload_zeroinit                 0x080005d8   Section       14  handlers.o(i.__scatterload_zeroinit)
-    i.i2c_clear_scl                          0x080005e6   Section        0  u8x8_byte.o(i.i2c_clear_scl)
-    i2c_clear_scl                            0x080005e7   Thumb Code    16  u8x8_byte.o(i.i2c_clear_scl)
-    i.i2c_clear_sda                          0x080005f6   Section        0  u8x8_byte.o(i.i2c_clear_sda)
-    i2c_clear_sda                            0x080005f7   Thumb Code    16  u8x8_byte.o(i.i2c_clear_sda)
-    i.i2c_delay                              0x08000606   Section        0  u8x8_byte.o(i.i2c_delay)
-    i2c_delay                                0x08000607   Thumb Code    18  u8x8_byte.o(i.i2c_delay)
-    i.i2c_init                               0x08000618   Section        0  u8x8_byte.o(i.i2c_init)
-    i2c_init                                 0x08000619   Thumb Code    32  u8x8_byte.o(i.i2c_init)
-    i.i2c_read_bit                           0x08000638   Section        0  u8x8_byte.o(i.i2c_read_bit)
-    i2c_read_bit                             0x08000639   Thumb Code    42  u8x8_byte.o(i.i2c_read_bit)
-    i.i2c_read_scl_and_delay                 0x08000662   Section        0  u8x8_byte.o(i.i2c_read_scl_and_delay)
-    i2c_read_scl_and_delay                   0x08000663   Thumb Code    22  u8x8_byte.o(i.i2c_read_scl_and_delay)
-    i.i2c_read_sda                           0x08000678   Section        0  u8x8_byte.o(i.i2c_read_sda)
-    i2c_read_sda                             0x08000679   Thumb Code    16  u8x8_byte.o(i.i2c_read_sda)
-    i.i2c_start                              0x08000688   Section        0  u8x8_byte.o(i.i2c_start)
-    i2c_start                                0x08000689   Thumb Code    60  u8x8_byte.o(i.i2c_start)
-    i.i2c_stop                               0x080006c4   Section        0  u8x8_byte.o(i.i2c_stop)
-    i2c_stop                                 0x080006c5   Thumb Code    42  u8x8_byte.o(i.i2c_stop)
-    i.i2c_write_bit                          0x080006ee   Section        0  u8x8_byte.o(i.i2c_write_bit)
-    i2c_write_bit                            0x080006ef   Thumb Code    42  u8x8_byte.o(i.i2c_write_bit)
-    i.i2c_write_byte                         0x08000718   Section        0  u8x8_byte.o(i.i2c_write_byte)
-    i2c_write_byte                           0x08000719   Thumb Code    94  u8x8_byte.o(i.i2c_write_byte)
-    i.main                                   0x08000776   Section        0  main.o(i.main)
-    i.ssd1306_init                           0x0800078c   Section        0  main.o(i.ssd1306_init)
-    i.u8g2_ClearBuffer                       0x080007c4   Section        0  u8g2_buffer.o(i.u8g2_ClearBuffer)
-    i.u8g2_DrawHVLine                        0x080007de   Section        0  u8g2_hvline.o(i.u8g2_DrawHVLine)
-    i.u8g2_DrawHXBM                          0x080008ba   Section        0  u8g2_bitmap.o(i.u8g2_DrawHXBM)
-    i.u8g2_DrawXBM                           0x080009a2   Section        0  u8g2_bitmap.o(i.u8g2_DrawXBM)
-    i.u8g2_IsIntersection                    0x080009fa   Section        0  u8g2_intersection.o(i.u8g2_IsIntersection)
-    i.u8g2_SendBuffer                        0x08000a34   Section        0  u8g2_buffer.o(i.u8g2_SendBuffer)
-    i.u8g2_SetFont                           0x08000a46   Section        0  u8g2_font.o(i.u8g2_SetFont)
-    i.u8g2_SetFontPosBaseline                0x08000a68   Section        0  u8g2_font.o(i.u8g2_SetFontPosBaseline)
-    i.u8g2_SetMaxClipWindow                  0x08000a74   Section        0  u8g2_setup.o(i.u8g2_SetMaxClipWindow)
-    i.u8g2_SetupBuffer                       0x08000a94   Section        0  u8g2_setup.o(i.u8g2_SetupBuffer)
-    i.u8g2_Setup_ssd1306_i2c_128x64_noname_f 0x08000af0   Section        0  u8g2_d_setup.o(i.u8g2_Setup_ssd1306_i2c_128x64_noname_f)
-    i.u8g2_UpdateRefHeight                   0x08000b34   Section        0  u8g2_font.o(i.u8g2_UpdateRefHeight)
-    i.u8g2_apply_clip_window                 0x08000bbc   Section        0  u8g2_setup.o(i.u8g2_apply_clip_window)
-    u8g2_apply_clip_window                   0x08000bbd   Thumb Code   122  u8g2_setup.o(i.u8g2_apply_clip_window)
-    i.u8g2_clip_intersection2                0x08000c36   Section        0  u8g2_hvline.o(i.u8g2_clip_intersection2)
-    u8g2_clip_intersection2                  0x08000c37   Thumb Code    76  u8g2_hvline.o(i.u8g2_clip_intersection2)
-    i.u8g2_draw_hv_line_2dir                 0x08000c82   Section        0  u8g2_hvline.o(i.u8g2_draw_hv_line_2dir)
-    i.u8g2_draw_l90_mirrorr_r0               0x08000cae   Section        0  u8g2_setup.o(i.u8g2_draw_l90_mirrorr_r0)
-    i.u8g2_draw_l90_r0                       0x08000cea   Section        0  u8g2_setup.o(i.u8g2_draw_l90_r0)
-    i.u8g2_draw_l90_r1                       0x08000d0e   Section        0  u8g2_setup.o(i.u8g2_draw_l90_r1)
-    i.u8g2_draw_l90_r2                       0x08000d52   Section        0  u8g2_setup.o(i.u8g2_draw_l90_r2)
-    i.u8g2_draw_l90_r3                       0x08000da8   Section        0  u8g2_setup.o(i.u8g2_draw_l90_r3)
-    i.u8g2_draw_mirror_vertical_r0           0x08000df8   Section        0  u8g2_setup.o(i.u8g2_draw_mirror_vertical_r0)
-    i.u8g2_font_calc_vref_font               0x08000e34   Section        0  u8g2_font.o(i.u8g2_font_calc_vref_font)
-    i.u8g2_font_get_byte                     0x08000e3a   Section        0  u8g2_font.o(i.u8g2_font_get_byte)
-    u8g2_font_get_byte                       0x08000e3b   Thumb Code     8  u8g2_font.o(i.u8g2_font_get_byte)
-    i.u8g2_font_get_word                     0x08000e42   Section        0  u8g2_font.o(i.u8g2_font_get_word)
-    u8g2_font_get_word                       0x08000e43   Thumb Code    24  u8g2_font.o(i.u8g2_font_get_word)
-    i.u8g2_init                              0x08000e5c   Section        0  main.o(i.u8g2_init)
-    i.u8g2_is_intersection_decision_tree     0x08000eb8   Section        0  u8g2_intersection.o(i.u8g2_is_intersection_decision_tree)
-    i.u8g2_ll_hvline_vertical_top_lsb        0x08000ee8   Section        0  u8g2_ll_hvline.o(i.u8g2_ll_hvline_vertical_top_lsb)
-    i.u8g2_m_16_8_f                          0x08000fd8   Section        0  u8g2_d_memory.o(i.u8g2_m_16_8_f)
-    i.u8g2_read_font_info                    0x08000fe8   Section        0  u8g2_font.o(i.u8g2_read_font_info)
-    i.u8g2_send_buffer                       0x080010c8   Section        0  u8g2_buffer.o(i.u8g2_send_buffer)
-    u8g2_send_buffer                         0x080010c9   Thumb Code    54  u8g2_buffer.o(i.u8g2_send_buffer)
-    i.u8g2_send_tile_row                     0x080010fe   Section        0  u8g2_buffer.o(i.u8g2_send_tile_row)
-    u8g2_send_tile_row                       0x080010ff   Thumb Code    54  u8g2_buffer.o(i.u8g2_send_tile_row)
-    i.u8g2_update_dimension_common           0x08001134   Section        0  u8g2_setup.o(i.u8g2_update_dimension_common)
-    u8g2_update_dimension_common             0x08001135   Thumb Code    96  u8g2_setup.o(i.u8g2_update_dimension_common)
-    i.u8g2_update_dimension_r0               0x08001194   Section        0  u8g2_setup.o(i.u8g2_update_dimension_r0)
-    i.u8g2_update_dimension_r1               0x080011a0   Section        0  u8g2_setup.o(i.u8g2_update_dimension_r1)
-    i.u8g2_update_dimension_r2               0x080011bc   Section        0  u8g2_setup.o(i.u8g2_update_dimension_r2)
-    i.u8g2_update_dimension_r3               0x080011c8   Section        0  u8g2_setup.o(i.u8g2_update_dimension_r3)
-    i.u8g2_update_page_win_r0                0x080011e4   Section        0  u8g2_setup.o(i.u8g2_update_page_win_r0)
-    i.u8g2_update_page_win_r1                0x08001204   Section        0  u8g2_setup.o(i.u8g2_update_page_win_r1)
-    i.u8g2_update_page_win_r2                0x08001224   Section        0  u8g2_setup.o(i.u8g2_update_page_win_r2)
-    i.u8g2_update_page_win_r3                0x08001260   Section        0  u8g2_setup.o(i.u8g2_update_page_win_r3)
-    i.u8x8_DrawTile                          0x0800129c   Section        0  u8x8_display.o(i.u8x8_DrawTile)
-    i.u8x8_InitDisplay                       0x080012ce   Section        0  u8x8_display.o(i.u8x8_InitDisplay)
-    i.u8x8_RefreshDisplay                    0x080012e0   Section        0  u8x8_display.o(i.u8x8_RefreshDisplay)
-    i.u8x8_SetPowerSave                      0x080012f2   Section        0  u8x8_display.o(i.u8x8_SetPowerSave)
-    i.u8x8_Setup                             0x08001306   Section        0  u8x8_setup.o(i.u8x8_Setup)
-    i.u8x8_SetupDefaults                     0x08001330   Section        0  u8x8_setup.o(i.u8x8_SetupDefaults)
-    i.u8x8_SetupMemory                       0x0800135c   Section        0  u8x8_display.o(i.u8x8_SetupMemory)
-    i.u8x8_byte_EndTransfer                  0x0800136e   Section        0  u8x8_byte.o(i.u8x8_byte_EndTransfer)
-    i.u8x8_byte_SendByte                     0x08001380   Section        0  u8x8_byte.o(i.u8x8_byte_SendByte)
-    i.u8x8_byte_SendBytes                    0x08001390   Section        0  u8x8_byte.o(i.u8x8_byte_SendBytes)
-    i.u8x8_byte_StartTransfer                0x080013aa   Section        0  u8x8_byte.o(i.u8x8_byte_StartTransfer)
-    i.u8x8_byte_sw_i2c                       0x080013bc   Section        0  u8x8_byte.o(i.u8x8_byte_sw_i2c)
-    i.u8x8_cad_EndTransfer                   0x0800142a   Section        0  u8x8_cad.o(i.u8x8_cad_EndTransfer)
-    i.u8x8_cad_SendArg                       0x0800143c   Section        0  u8x8_cad.o(i.u8x8_cad_SendArg)
-    i.u8x8_cad_SendCmd                       0x08001450   Section        0  u8x8_cad.o(i.u8x8_cad_SendCmd)
-    i.u8x8_cad_SendData                      0x08001464   Section        0  u8x8_cad.o(i.u8x8_cad_SendData)
-    i.u8x8_cad_SendSequence                  0x0800147e   Section        0  u8x8_cad.o(i.u8x8_cad_SendSequence)
-    i.u8x8_cad_StartTransfer                 0x080014fa   Section        0  u8x8_cad.o(i.u8x8_cad_StartTransfer)
-    i.u8x8_cad_ssd13xx_fast_i2c              0x0800150c   Section        0  u8x8_cad.o(i.u8x8_cad_ssd13xx_fast_i2c)
-    i.u8x8_d_helper_display_init             0x080015e0   Section        0  u8x8_display.o(i.u8x8_d_helper_display_init)
-    i.u8x8_d_helper_display_setup_memory     0x08001640   Section        0  u8x8_display.o(i.u8x8_d_helper_display_setup_memory)
-    i.u8x8_d_ssd1306_128x64_noname           0x0800164c   Section        0  u8x8_d_ssd1306_128x64_noname.o(i.u8x8_d_ssd1306_128x64_noname)
-    i.u8x8_d_ssd1306_sh1106_generic          0x080016a0   Section        0  u8x8_d_ssd1306_128x64_noname.o(i.u8x8_d_ssd1306_sh1106_generic)
-    u8x8_d_ssd1306_sh1106_generic            0x080016a1   Thumb Code   242  u8x8_d_ssd1306_128x64_noname.o(i.u8x8_d_ssd1306_sh1106_generic)
-    i.u8x8_dummy_cb                          0x080017a4   Section        0  u8x8_setup.o(i.u8x8_dummy_cb)
-    i.u8x8_gpio_and_delay                    0x080017ac   Section        0  main.o(i.u8x8_gpio_and_delay)
-    i.u8x8_gpio_call                         0x08001878   Section        0  u8x8_gpio.o(i.u8x8_gpio_call)
-    i.u8x8_i2c_data_transfer                 0x08001892   Section        0  u8x8_cad.o(i.u8x8_i2c_data_transfer)
-    u8x8_i2c_data_transfer                   0x08001893   Thumb Code    46  u8x8_cad.o(i.u8x8_i2c_data_transfer)
-    .constdata                               0x080018c0   Section      512  main.o(.constdata)
-    bmp1                                     0x080018c0   Data         512  main.o(.constdata)
-    .constdata                               0x08001ac0   Section     1782  u8g2_fonts.o(.constdata)
-    .constdata                               0x080021b8   Section       72  u8g2_setup.o(.constdata)
-    .constdata                               0x08002200   Section      344  u8x8_d_ssd1306_128x64_noname.o(.constdata)
-    u8x8_d_ssd1306_128x64_noname_init_seq    0x08002200   Data          53  u8x8_d_ssd1306_128x64_noname.o(.constdata)
-    u8x8_d_ssd1306_128x64_vcomh0_init_seq    0x08002235   Data          53  u8x8_d_ssd1306_128x64_noname.o(.constdata)
-    u8x8_d_ssd1306_128x64_alt0_init_seq      0x0800226a   Data          53  u8x8_d_ssd1306_128x64_noname.o(.constdata)
-    u8x8_d_sh1106_128x64_winstar_init_seq    0x0800229f   Data          45  u8x8_d_ssd1306_128x64_noname.o(.constdata)
-    u8x8_d_ssd1312_128x64_noname_init_seq    0x080022cc   Data          53  u8x8_d_ssd1306_128x64_noname.o(.constdata)
-    u8x8_d_ssd1306_128x64_noname_powersave0_seq 0x08002301   Data           5  u8x8_d_ssd1306_128x64_noname.o(.constdata)
-    u8x8_d_ssd1306_128x64_noname_powersave1_seq 0x08002306   Data           5  u8x8_d_ssd1306_128x64_noname.o(.constdata)
-    u8x8_d_ssd1306_128x64_noname_flip0_seq   0x0800230b   Data           7  u8x8_d_ssd1306_128x64_noname.o(.constdata)
-    u8x8_d_ssd1306_128x64_noname_flip1_seq   0x08002312   Data           7  u8x8_d_ssd1306_128x64_noname.o(.constdata)
-    u8x8_d_ssd1312_128x64_noname_flip0_seq   0x08002319   Data           7  u8x8_d_ssd1306_128x64_noname.o(.constdata)
-    u8x8_d_ssd1312_128x64_noname_flip1_seq   0x08002320   Data           7  u8x8_d_ssd1306_128x64_noname.o(.constdata)
-    u8x8_ssd1306_128x64_noname_display_info  0x08002328   Data          24  u8x8_d_ssd1306_128x64_noname.o(.constdata)
-    u8x8_sh1106_128x64_noname_display_info   0x08002340   Data          24  u8x8_d_ssd1306_128x64_noname.o(.constdata)
-    .data                                    0x20000000   Section        6  u8x8_cad.o(.data)
-    in_transfer                              0x20000000   Data           1  u8x8_cad.o(.data)
-    in_transfer                              0x20000001   Data           1  u8x8_cad.o(.data)
-    in_transfer                              0x20000002   Data           1  u8x8_cad.o(.data)
-    is_data                                  0x20000003   Data           1  u8x8_cad.o(.data)
-    in_transfer                              0x20000004   Data           1  u8x8_cad.o(.data)
-    is_data                                  0x20000005   Data           1  u8x8_cad.o(.data)
-    .bss                                     0x20000008   Section     1024  u8g2_d_memory.o(.bss)
-    buf                                      0x20000008   Data        1024  u8g2_d_memory.o(.bss)
-    STACK                                    0x20000408   Section     1024  startup_stm32f10x_hd.o(STACK)
+    i.RCC_GetClocksFreq                      0x08000344   Section        0  stm32f10x_rcc.o(i.RCC_GetClocksFreq)
+    i.RCC_init                               0x08000418   Section        0  rcc.o(i.RCC_init)
+    i.SVC_Handler                            0x08000468   Section        0  stm32f10x_it.o(i.SVC_Handler)
+    i.SetSysClock                            0x0800046a   Section        0  system_stm32f10x.o(i.SetSysClock)
+    SetSysClock                              0x0800046b   Thumb Code     8  system_stm32f10x.o(i.SetSysClock)
+    i.SetSysClockTo72                        0x08000474   Section        0  system_stm32f10x.o(i.SetSysClockTo72)
+    SetSysClockTo72                          0x08000475   Thumb Code   214  system_stm32f10x.o(i.SetSysClockTo72)
+    i.SysTick_Handler                        0x08000554   Section        0  stm32f10x_it.o(i.SysTick_Handler)
+    i.SystemInit                             0x08000558   Section        0  system_stm32f10x.o(i.SystemInit)
+    i.USART1_init                            0x080005b8   Section        0  usart.o(i.USART1_init)
+    i.UsageFault_Handler                     0x08000630   Section        0  stm32f10x_it.o(i.UsageFault_Handler)
+    i.__scatterload_copy                     0x08000634   Section       14  handlers.o(i.__scatterload_copy)
+    i.__scatterload_null                     0x08000642   Section        2  handlers.o(i.__scatterload_null)
+    i.__scatterload_zeroinit                 0x08000644   Section       14  handlers.o(i.__scatterload_zeroinit)
+    i.i2c_clear_scl                          0x08000652   Section        0  u8x8_byte.o(i.i2c_clear_scl)
+    i2c_clear_scl                            0x08000653   Thumb Code    16  u8x8_byte.o(i.i2c_clear_scl)
+    i.i2c_clear_sda                          0x08000662   Section        0  u8x8_byte.o(i.i2c_clear_sda)
+    i2c_clear_sda                            0x08000663   Thumb Code    16  u8x8_byte.o(i.i2c_clear_sda)
+    i.i2c_delay                              0x08000672   Section        0  u8x8_byte.o(i.i2c_delay)
+    i2c_delay                                0x08000673   Thumb Code    18  u8x8_byte.o(i.i2c_delay)
+    i.i2c_init                               0x08000684   Section        0  u8x8_byte.o(i.i2c_init)
+    i2c_init                                 0x08000685   Thumb Code    32  u8x8_byte.o(i.i2c_init)
+    i.i2c_read_bit                           0x080006a4   Section        0  u8x8_byte.o(i.i2c_read_bit)
+    i2c_read_bit                             0x080006a5   Thumb Code    42  u8x8_byte.o(i.i2c_read_bit)
+    i.i2c_read_scl_and_delay                 0x080006ce   Section        0  u8x8_byte.o(i.i2c_read_scl_and_delay)
+    i2c_read_scl_and_delay                   0x080006cf   Thumb Code    22  u8x8_byte.o(i.i2c_read_scl_and_delay)
+    i.i2c_read_sda                           0x080006e4   Section        0  u8x8_byte.o(i.i2c_read_sda)
+    i2c_read_sda                             0x080006e5   Thumb Code    16  u8x8_byte.o(i.i2c_read_sda)
+    i.i2c_start                              0x080006f4   Section        0  u8x8_byte.o(i.i2c_start)
+    i2c_start                                0x080006f5   Thumb Code    60  u8x8_byte.o(i.i2c_start)
+    i.i2c_stop                               0x08000730   Section        0  u8x8_byte.o(i.i2c_stop)
+    i2c_stop                                 0x08000731   Thumb Code    42  u8x8_byte.o(i.i2c_stop)
+    i.i2c_write_bit                          0x0800075a   Section        0  u8x8_byte.o(i.i2c_write_bit)
+    i2c_write_bit                            0x0800075b   Thumb Code    42  u8x8_byte.o(i.i2c_write_bit)
+    i.i2c_write_byte                         0x08000784   Section        0  u8x8_byte.o(i.i2c_write_byte)
+    i2c_write_byte                           0x08000785   Thumb Code    94  u8x8_byte.o(i.i2c_write_byte)
+    i.main                                   0x080007e2   Section        0  main.o(i.main)
+    i.ssd1306_init                           0x08000804   Section        0  main.o(i.ssd1306_init)
+    i.u8g2_ClearBuffer                       0x08000820   Section        0  u8g2_buffer.o(i.u8g2_ClearBuffer)
+    i.u8g2_DrawGlyph                         0x0800083a   Section        0  u8g2_font.o(i.u8g2_DrawGlyph)
+    i.u8g2_DrawHVLine                        0x0800089c   Section        0  u8g2_hvline.o(i.u8g2_DrawHVLine)
+    i.u8g2_DrawStr                           0x08000978   Section        0  u8g2_font.o(i.u8g2_DrawStr)
+    i.u8g2_IsIntersection                    0x0800099c   Section        0  u8g2_intersection.o(i.u8g2_IsIntersection)
+    i.u8g2_SendBuffer                        0x080009d6   Section        0  u8g2_buffer.o(i.u8g2_SendBuffer)
+    i.u8g2_SetFont                           0x080009e8   Section        0  u8g2_font.o(i.u8g2_SetFont)
+    i.u8g2_SetFontPosBaseline                0x08000a08   Section        0  u8g2_font.o(i.u8g2_SetFontPosBaseline)
+    i.u8g2_SetMaxClipWindow                  0x08000a14   Section        0  u8g2_setup.o(i.u8g2_SetMaxClipWindow)
+    i.u8g2_SetupBuffer                       0x08000a34   Section        0  u8g2_setup.o(i.u8g2_SetupBuffer)
+    i.u8g2_Setup_ssd1306_i2c_128x64_noname_f 0x08000a90   Section        0  u8g2_d_setup.o(i.u8g2_Setup_ssd1306_i2c_128x64_noname_f)
+    i.u8g2_UpdateRefHeight                   0x08000ad4   Section        0  u8g2_font.o(i.u8g2_UpdateRefHeight)
+    i.u8g2_add_vector_x                      0x08000b5c   Section        0  u8g2_font.o(i.u8g2_add_vector_x)
+    i.u8g2_add_vector_y                      0x08000b86   Section        0  u8g2_font.o(i.u8g2_add_vector_y)
+    i.u8g2_apply_clip_window                 0x08000bb0   Section        0  u8g2_setup.o(i.u8g2_apply_clip_window)
+    u8g2_apply_clip_window                   0x08000bb1   Thumb Code   122  u8g2_setup.o(i.u8g2_apply_clip_window)
+    i.u8g2_clip_intersection2                0x08000c2a   Section        0  u8g2_hvline.o(i.u8g2_clip_intersection2)
+    u8g2_clip_intersection2                  0x08000c2b   Thumb Code    76  u8g2_hvline.o(i.u8g2_clip_intersection2)
+    i.u8g2_draw_hv_line_2dir                 0x08000c76   Section        0  u8g2_hvline.o(i.u8g2_draw_hv_line_2dir)
+    i.u8g2_draw_l90_mirrorr_r0               0x08000ca2   Section        0  u8g2_setup.o(i.u8g2_draw_l90_mirrorr_r0)
+    i.u8g2_draw_l90_r0                       0x08000cde   Section        0  u8g2_setup.o(i.u8g2_draw_l90_r0)
+    i.u8g2_draw_l90_r1                       0x08000d02   Section        0  u8g2_setup.o(i.u8g2_draw_l90_r1)
+    i.u8g2_draw_l90_r2                       0x08000d46   Section        0  u8g2_setup.o(i.u8g2_draw_l90_r2)
+    i.u8g2_draw_l90_r3                       0x08000d9c   Section        0  u8g2_setup.o(i.u8g2_draw_l90_r3)
+    i.u8g2_draw_mirror_vertical_r0           0x08000dec   Section        0  u8g2_setup.o(i.u8g2_draw_mirror_vertical_r0)
+    i.u8g2_draw_string                       0x08000e28   Section        0  u8g2_font.o(i.u8g2_draw_string)
+    u8g2_draw_string                         0x08000e29   Thumb Code   144  u8g2_font.o(i.u8g2_draw_string)
+    i.u8g2_font_calc_vref_font               0x08000eb8   Section        0  u8g2_font.o(i.u8g2_font_calc_vref_font)
+    i.u8g2_font_decode_get_signed_bits       0x08000ebe   Section        0  u8g2_font.o(i.u8g2_font_decode_get_signed_bits)
+    i.u8g2_font_decode_get_unsigned_bits     0x08000ee2   Section        0  u8g2_font.o(i.u8g2_font_decode_get_unsigned_bits)
+    i.u8g2_font_decode_glyph                 0x08000f24   Section        0  u8g2_font.o(i.u8g2_font_decode_glyph)
+    i.u8g2_font_decode_len                   0x080010a6   Section        0  u8g2_font.o(i.u8g2_font_decode_len)
+    i.u8g2_font_draw_glyph                   0x08001156   Section        0  u8g2_font.o(i.u8g2_font_draw_glyph)
+    u8g2_font_draw_glyph                     0x08001157   Thumb Code    58  u8g2_font.o(i.u8g2_font_draw_glyph)
+    i.u8g2_font_get_byte                     0x08001190   Section        0  u8g2_font.o(i.u8g2_font_get_byte)
+    u8g2_font_get_byte                       0x08001191   Thumb Code     8  u8g2_font.o(i.u8g2_font_get_byte)
+    i.u8g2_font_get_glyph_data               0x08001198   Section        0  u8g2_font.o(i.u8g2_font_get_glyph_data)
+    i.u8g2_font_get_word                     0x0800122a   Section        0  u8g2_font.o(i.u8g2_font_get_word)
+    u8g2_font_get_word                       0x0800122b   Thumb Code    24  u8g2_font.o(i.u8g2_font_get_word)
+    i.u8g2_font_setup_decode                 0x08001242   Section        0  u8g2_font.o(i.u8g2_font_setup_decode)
+    u8g2_font_setup_decode                   0x08001243   Thumb Code    64  u8g2_font.o(i.u8g2_font_setup_decode)
+    i.u8g2_init                              0x08001284   Section        0  main.o(i.u8g2_init)
+    i.u8g2_is_intersection_decision_tree     0x080012e0   Section        0  u8g2_intersection.o(i.u8g2_is_intersection_decision_tree)
+    i.u8g2_ll_hvline_vertical_top_lsb        0x08001310   Section        0  u8g2_ll_hvline.o(i.u8g2_ll_hvline_vertical_top_lsb)
+    i.u8g2_loop                              0x08001400   Section        0  main.o(i.u8g2_loop)
+    i.u8g2_m_16_8_f                          0x08001464   Section        0  u8g2_d_memory.o(i.u8g2_m_16_8_f)
+    i.u8g2_read_font_info                    0x08001474   Section        0  u8g2_font.o(i.u8g2_read_font_info)
+    i.u8g2_send_buffer                       0x08001554   Section        0  u8g2_buffer.o(i.u8g2_send_buffer)
+    u8g2_send_buffer                         0x08001555   Thumb Code    54  u8g2_buffer.o(i.u8g2_send_buffer)
+    i.u8g2_send_tile_row                     0x0800158a   Section        0  u8g2_buffer.o(i.u8g2_send_tile_row)
+    u8g2_send_tile_row                       0x0800158b   Thumb Code    54  u8g2_buffer.o(i.u8g2_send_tile_row)
+    i.u8g2_update_dimension_common           0x080015c0   Section        0  u8g2_setup.o(i.u8g2_update_dimension_common)
+    u8g2_update_dimension_common             0x080015c1   Thumb Code    96  u8g2_setup.o(i.u8g2_update_dimension_common)
+    i.u8g2_update_dimension_r0               0x08001620   Section        0  u8g2_setup.o(i.u8g2_update_dimension_r0)
+    i.u8g2_update_dimension_r1               0x0800162c   Section        0  u8g2_setup.o(i.u8g2_update_dimension_r1)
+    i.u8g2_update_dimension_r2               0x08001648   Section        0  u8g2_setup.o(i.u8g2_update_dimension_r2)
+    i.u8g2_update_dimension_r3               0x08001654   Section        0  u8g2_setup.o(i.u8g2_update_dimension_r3)
+    i.u8g2_update_page_win_r0                0x08001670   Section        0  u8g2_setup.o(i.u8g2_update_page_win_r0)
+    i.u8g2_update_page_win_r1                0x08001690   Section        0  u8g2_setup.o(i.u8g2_update_page_win_r1)
+    i.u8g2_update_page_win_r2                0x080016b0   Section        0  u8g2_setup.o(i.u8g2_update_page_win_r2)
+    i.u8g2_update_page_win_r3                0x080016ec   Section        0  u8g2_setup.o(i.u8g2_update_page_win_r3)
+    i.u8x8_DrawTile                          0x08001728   Section        0  u8x8_display.o(i.u8x8_DrawTile)
+    i.u8x8_InitDisplay                       0x0800175a   Section        0  u8x8_display.o(i.u8x8_InitDisplay)
+    i.u8x8_RefreshDisplay                    0x0800176c   Section        0  u8x8_display.o(i.u8x8_RefreshDisplay)
+    i.u8x8_SetPowerSave                      0x0800177e   Section        0  u8x8_display.o(i.u8x8_SetPowerSave)
+    i.u8x8_Setup                             0x08001792   Section        0  u8x8_setup.o(i.u8x8_Setup)
+    i.u8x8_SetupDefaults                     0x080017bc   Section        0  u8x8_setup.o(i.u8x8_SetupDefaults)
+    i.u8x8_SetupMemory                       0x080017e8   Section        0  u8x8_display.o(i.u8x8_SetupMemory)
+    i.u8x8_ascii_next                        0x080017fa   Section        0  u8x8_8x8.o(i.u8x8_ascii_next)
+    i.u8x8_byte_EndTransfer                  0x0800180c   Section        0  u8x8_byte.o(i.u8x8_byte_EndTransfer)
+    i.u8x8_byte_SendByte                     0x0800181e   Section        0  u8x8_byte.o(i.u8x8_byte_SendByte)
+    i.u8x8_byte_SendBytes                    0x0800182e   Section        0  u8x8_byte.o(i.u8x8_byte_SendBytes)
+    i.u8x8_byte_StartTransfer                0x08001848   Section        0  u8x8_byte.o(i.u8x8_byte_StartTransfer)
+    i.u8x8_byte_sw_i2c                       0x0800185a   Section        0  u8x8_byte.o(i.u8x8_byte_sw_i2c)
+    i.u8x8_cad_EndTransfer                   0x080018c8   Section        0  u8x8_cad.o(i.u8x8_cad_EndTransfer)
+    i.u8x8_cad_SendArg                       0x080018da   Section        0  u8x8_cad.o(i.u8x8_cad_SendArg)
+    i.u8x8_cad_SendCmd                       0x080018ee   Section        0  u8x8_cad.o(i.u8x8_cad_SendCmd)
+    i.u8x8_cad_SendData                      0x08001902   Section        0  u8x8_cad.o(i.u8x8_cad_SendData)
+    i.u8x8_cad_SendSequence                  0x0800191c   Section        0  u8x8_cad.o(i.u8x8_cad_SendSequence)
+    i.u8x8_cad_StartTransfer                 0x08001998   Section        0  u8x8_cad.o(i.u8x8_cad_StartTransfer)
+    i.u8x8_cad_ssd13xx_fast_i2c              0x080019ac   Section        0  u8x8_cad.o(i.u8x8_cad_ssd13xx_fast_i2c)
+    i.u8x8_d_helper_display_init             0x08001a80   Section        0  u8x8_display.o(i.u8x8_d_helper_display_init)
+    i.u8x8_d_helper_display_setup_memory     0x08001ae0   Section        0  u8x8_display.o(i.u8x8_d_helper_display_setup_memory)
+    i.u8x8_d_ssd1306_128x64_noname           0x08001aec   Section        0  u8x8_d_ssd1306_128x64_noname.o(i.u8x8_d_ssd1306_128x64_noname)
+    i.u8x8_d_ssd1306_sh1106_generic          0x08001b40   Section        0  u8x8_d_ssd1306_128x64_noname.o(i.u8x8_d_ssd1306_sh1106_generic)
+    u8x8_d_ssd1306_sh1106_generic            0x08001b41   Thumb Code   242  u8x8_d_ssd1306_128x64_noname.o(i.u8x8_d_ssd1306_sh1106_generic)
+    i.u8x8_dummy_cb                          0x08001c44   Section        0  u8x8_setup.o(i.u8x8_dummy_cb)
+    i.u8x8_gpio_and_delay                    0x08001c4c   Section        0  main.o(i.u8x8_gpio_and_delay)
+    i.u8x8_gpio_call                         0x08001cfc   Section        0  u8x8_gpio.o(i.u8x8_gpio_call)
+    i.u8x8_i2c_data_transfer                 0x08001d16   Section        0  u8x8_cad.o(i.u8x8_i2c_data_transfer)
+    u8x8_i2c_data_transfer                   0x08001d17   Thumb Code    46  u8x8_cad.o(i.u8x8_i2c_data_transfer)
+    i.u8x8_utf8_init                         0x08001d44   Section        0  u8x8_8x8.o(i.u8x8_utf8_init)
+    .constdata                               0x08001d4c   Section    10346  u8g2_fonts.o(.constdata)
+    .constdata                               0x080045b8   Section       72  u8g2_setup.o(.constdata)
+    .constdata                               0x08004600   Section      344  u8x8_d_ssd1306_128x64_noname.o(.constdata)
+    u8x8_d_ssd1306_128x64_noname_init_seq    0x08004600   Data          53  u8x8_d_ssd1306_128x64_noname.o(.constdata)
+    u8x8_d_ssd1306_128x64_vcomh0_init_seq    0x08004635   Data          53  u8x8_d_ssd1306_128x64_noname.o(.constdata)
+    u8x8_d_ssd1306_128x64_alt0_init_seq      0x0800466a   Data          53  u8x8_d_ssd1306_128x64_noname.o(.constdata)
+    u8x8_d_sh1106_128x64_winstar_init_seq    0x0800469f   Data          45  u8x8_d_ssd1306_128x64_noname.o(.constdata)
+    u8x8_d_ssd1312_128x64_noname_init_seq    0x080046cc   Data          53  u8x8_d_ssd1306_128x64_noname.o(.constdata)
+    u8x8_d_ssd1306_128x64_noname_powersave0_seq 0x08004701   Data           5  u8x8_d_ssd1306_128x64_noname.o(.constdata)
+    u8x8_d_ssd1306_128x64_noname_powersave1_seq 0x08004706   Data           5  u8x8_d_ssd1306_128x64_noname.o(.constdata)
+    u8x8_d_ssd1306_128x64_noname_flip0_seq   0x0800470b   Data           7  u8x8_d_ssd1306_128x64_noname.o(.constdata)
+    u8x8_d_ssd1306_128x64_noname_flip1_seq   0x08004712   Data           7  u8x8_d_ssd1306_128x64_noname.o(.constdata)
+    u8x8_d_ssd1312_128x64_noname_flip0_seq   0x08004719   Data           7  u8x8_d_ssd1306_128x64_noname.o(.constdata)
+    u8x8_d_ssd1312_128x64_noname_flip1_seq   0x08004720   Data           7  u8x8_d_ssd1306_128x64_noname.o(.constdata)
+    u8x8_ssd1306_128x64_noname_display_info  0x08004728   Data          24  u8x8_d_ssd1306_128x64_noname.o(.constdata)
+    u8x8_sh1106_128x64_noname_display_info   0x08004740   Data          24  u8x8_d_ssd1306_128x64_noname.o(.constdata)
+    .data                                    0x20000000   Section       20  stm32f10x_rcc.o(.data)
+    APBAHBPrescTable                         0x20000000   Data          16  stm32f10x_rcc.o(.data)
+    ADCPrescTable                            0x20000010   Data           4  stm32f10x_rcc.o(.data)
+    .data                                    0x20000014   Section        6  u8x8_cad.o(.data)
+    in_transfer                              0x20000014   Data           1  u8x8_cad.o(.data)
+    in_transfer                              0x20000015   Data           1  u8x8_cad.o(.data)
+    in_transfer                              0x20000016   Data           1  u8x8_cad.o(.data)
+    is_data                                  0x20000017   Data           1  u8x8_cad.o(.data)
+    in_transfer                              0x20000018   Data           1  u8x8_cad.o(.data)
+    is_data                                  0x20000019   Data           1  u8x8_cad.o(.data)
+    .bss                                     0x2000001c   Section      148  main.o(.bss)
+    .bss                                     0x200000b0   Section     1024  u8g2_d_memory.o(.bss)
+    buf                                      0x200000b0   Data        1024  u8g2_d_memory.o(.bss)
+    STACK                                    0x200004b0   Section     1024  startup_stm32f10x_hd.o(STACK)
 
     Global Symbols
 
@@ -2202,87 +2211,98 @@ Image Symbol Table
     NMI_Handler                              0x08000321   Thumb Code     2  stm32f10x_it.o(i.NMI_Handler)
     PendSV_Handler                           0x08000323   Thumb Code     2  stm32f10x_it.o(i.PendSV_Handler)
     RCC_APB2PeriphClockCmd                   0x08000325   Thumb Code    26  stm32f10x_rcc.o(i.RCC_APB2PeriphClockCmd)
-    RCC_init                                 0x08000345   Thumb Code    74  rcc.o(i.RCC_init)
-    SVC_Handler                              0x08000395   Thumb Code     2  stm32f10x_it.o(i.SVC_Handler)
-    SysTick_Handler                          0x08000481   Thumb Code     2  stm32f10x_it.o(i.SysTick_Handler)
-    SystemInit                               0x08000485   Thumb Code    78  system_stm32f10x.o(i.SystemInit)
-    Systick_ms                               0x080004e5   Thumb Code    22  rcc.o(i.Systick_ms)
-    Systick_us                               0x080004fb   Thumb Code    80  rcc.o(i.Systick_us)
-    USART1_init                              0x0800054d   Thumb Code   104  usart.o(i.USART1_init)
-    UsageFault_Handler                       0x080005c5   Thumb Code     4  stm32f10x_it.o(i.UsageFault_Handler)
-    __scatterload_copy                       0x080005c9   Thumb Code    14  handlers.o(i.__scatterload_copy)
-    __scatterload_null                       0x080005d7   Thumb Code     2  handlers.o(i.__scatterload_null)
-    __scatterload_zeroinit                   0x080005d9   Thumb Code    14  handlers.o(i.__scatterload_zeroinit)
-    main                                     0x08000777   Thumb Code    20  main.o(i.main)
-    ssd1306_init                             0x0800078d   Thumb Code    48  main.o(i.ssd1306_init)
-    u8g2_ClearBuffer                         0x080007c5   Thumb Code    26  u8g2_buffer.o(i.u8g2_ClearBuffer)
-    u8g2_DrawHVLine                          0x080007df   Thumb Code   220  u8g2_hvline.o(i.u8g2_DrawHVLine)
-    u8g2_DrawHXBM                            0x080008bb   Thumb Code   232  u8g2_bitmap.o(i.u8g2_DrawHXBM)
-    u8g2_DrawXBM                             0x080009a3   Thumb Code    88  u8g2_bitmap.o(i.u8g2_DrawXBM)
-    u8g2_IsIntersection                      0x080009fb   Thumb Code    58  u8g2_intersection.o(i.u8g2_IsIntersection)
-    u8g2_SendBuffer                          0x08000a35   Thumb Code    18  u8g2_buffer.o(i.u8g2_SendBuffer)
-    u8g2_SetFont                             0x08000a47   Thumb Code    32  u8g2_font.o(i.u8g2_SetFont)
-    u8g2_SetFontPosBaseline                  0x08000a69   Thumb Code     6  u8g2_font.o(i.u8g2_SetFontPosBaseline)
-    u8g2_SetMaxClipWindow                    0x08000a75   Thumb Code    32  u8g2_setup.o(i.u8g2_SetMaxClipWindow)
-    u8g2_SetupBuffer                         0x08000a95   Thumb Code    90  u8g2_setup.o(i.u8g2_SetupBuffer)
-    u8g2_Setup_ssd1306_i2c_128x64_noname_f   0x08000af1   Thumb Code    54  u8g2_d_setup.o(i.u8g2_Setup_ssd1306_i2c_128x64_noname_f)
-    u8g2_UpdateRefHeight                     0x08000b35   Thumb Code   136  u8g2_font.o(i.u8g2_UpdateRefHeight)
-    u8g2_draw_hv_line_2dir                   0x08000c83   Thumb Code    44  u8g2_hvline.o(i.u8g2_draw_hv_line_2dir)
-    u8g2_draw_l90_mirrorr_r0                 0x08000caf   Thumb Code    60  u8g2_setup.o(i.u8g2_draw_l90_mirrorr_r0)
-    u8g2_draw_l90_r0                         0x08000ceb   Thumb Code    36  u8g2_setup.o(i.u8g2_draw_l90_r0)
-    u8g2_draw_l90_r1                         0x08000d0f   Thumb Code    68  u8g2_setup.o(i.u8g2_draw_l90_r1)
-    u8g2_draw_l90_r2                         0x08000d53   Thumb Code    86  u8g2_setup.o(i.u8g2_draw_l90_r2)
-    u8g2_draw_l90_r3                         0x08000da9   Thumb Code    80  u8g2_setup.o(i.u8g2_draw_l90_r3)
-    u8g2_draw_mirror_vertical_r0             0x08000df9   Thumb Code    60  u8g2_setup.o(i.u8g2_draw_mirror_vertical_r0)
-    u8g2_font_calc_vref_font                 0x08000e35   Thumb Code     6  u8g2_font.o(i.u8g2_font_calc_vref_font)
-    u8g2_init                                0x08000e5d   Thumb Code    74  main.o(i.u8g2_init)
-    u8g2_is_intersection_decision_tree       0x08000eb9   Thumb Code    48  u8g2_intersection.o(i.u8g2_is_intersection_decision_tree)
-    u8g2_ll_hvline_vertical_top_lsb          0x08000ee9   Thumb Code   238  u8g2_ll_hvline.o(i.u8g2_ll_hvline_vertical_top_lsb)
-    u8g2_m_16_8_f                            0x08000fd9   Thumb Code    10  u8g2_d_memory.o(i.u8g2_m_16_8_f)
-    u8g2_read_font_info                      0x08000fe9   Thumb Code   224  u8g2_font.o(i.u8g2_read_font_info)
-    u8g2_update_dimension_r0                 0x08001195   Thumb Code    12  u8g2_setup.o(i.u8g2_update_dimension_r0)
-    u8g2_update_dimension_r1                 0x080011a1   Thumb Code    28  u8g2_setup.o(i.u8g2_update_dimension_r1)
-    u8g2_update_dimension_r2                 0x080011bd   Thumb Code    12  u8g2_setup.o(i.u8g2_update_dimension_r2)
-    u8g2_update_dimension_r3                 0x080011c9   Thumb Code    28  u8g2_setup.o(i.u8g2_update_dimension_r3)
-    u8g2_update_page_win_r0                  0x080011e5   Thumb Code    32  u8g2_setup.o(i.u8g2_update_page_win_r0)
-    u8g2_update_page_win_r1                  0x08001205   Thumb Code    32  u8g2_setup.o(i.u8g2_update_page_win_r1)
-    u8g2_update_page_win_r2                  0x08001225   Thumb Code    60  u8g2_setup.o(i.u8g2_update_page_win_r2)
-    u8g2_update_page_win_r3                  0x08001261   Thumb Code    60  u8g2_setup.o(i.u8g2_update_page_win_r3)
-    u8x8_DrawTile                            0x0800129d   Thumb Code    50  u8x8_display.o(i.u8x8_DrawTile)
-    u8x8_InitDisplay                         0x080012cf   Thumb Code    18  u8x8_display.o(i.u8x8_InitDisplay)
-    u8x8_RefreshDisplay                      0x080012e1   Thumb Code    18  u8x8_display.o(i.u8x8_RefreshDisplay)
-    u8x8_SetPowerSave                        0x080012f3   Thumb Code    20  u8x8_display.o(i.u8x8_SetPowerSave)
-    u8x8_Setup                               0x08001307   Thumb Code    42  u8x8_setup.o(i.u8x8_Setup)
-    u8x8_SetupDefaults                       0x08001331   Thumb Code    38  u8x8_setup.o(i.u8x8_SetupDefaults)
-    u8x8_SetupMemory                         0x0800135d   Thumb Code    18  u8x8_display.o(i.u8x8_SetupMemory)
-    u8x8_byte_EndTransfer                    0x0800136f   Thumb Code    18  u8x8_byte.o(i.u8x8_byte_EndTransfer)
-    u8x8_byte_SendByte                       0x08001381   Thumb Code    16  u8x8_byte.o(i.u8x8_byte_SendByte)
-    u8x8_byte_SendBytes                      0x08001391   Thumb Code    26  u8x8_byte.o(i.u8x8_byte_SendBytes)
-    u8x8_byte_StartTransfer                  0x080013ab   Thumb Code    18  u8x8_byte.o(i.u8x8_byte_StartTransfer)
-    u8x8_byte_sw_i2c                         0x080013bd   Thumb Code   110  u8x8_byte.o(i.u8x8_byte_sw_i2c)
-    u8x8_cad_EndTransfer                     0x0800142b   Thumb Code    18  u8x8_cad.o(i.u8x8_cad_EndTransfer)
-    u8x8_cad_SendArg                         0x0800143d   Thumb Code    20  u8x8_cad.o(i.u8x8_cad_SendArg)
-    u8x8_cad_SendCmd                         0x08001451   Thumb Code    20  u8x8_cad.o(i.u8x8_cad_SendCmd)
-    u8x8_cad_SendData                        0x08001465   Thumb Code    26  u8x8_cad.o(i.u8x8_cad_SendData)
-    u8x8_cad_SendSequence                    0x0800147f   Thumb Code   124  u8x8_cad.o(i.u8x8_cad_SendSequence)
-    u8x8_cad_StartTransfer                   0x080014fb   Thumb Code    18  u8x8_cad.o(i.u8x8_cad_StartTransfer)
-    u8x8_cad_ssd13xx_fast_i2c                0x0800150d   Thumb Code   208  u8x8_cad.o(i.u8x8_cad_ssd13xx_fast_i2c)
-    u8x8_d_helper_display_init               0x080015e1   Thumb Code    96  u8x8_display.o(i.u8x8_d_helper_display_init)
-    u8x8_d_helper_display_setup_memory       0x08001641   Thumb Code    12  u8x8_display.o(i.u8x8_d_helper_display_setup_memory)
-    u8x8_d_ssd1306_128x64_noname             0x0800164d   Thumb Code    76  u8x8_d_ssd1306_128x64_noname.o(i.u8x8_d_ssd1306_128x64_noname)
-    u8x8_dummy_cb                            0x080017a5   Thumb Code     8  u8x8_setup.o(i.u8x8_dummy_cb)
-    u8x8_gpio_and_delay                      0x080017ad   Thumb Code   200  main.o(i.u8x8_gpio_and_delay)
-    u8x8_gpio_call                           0x08001879   Thumb Code    26  u8x8_gpio.o(i.u8x8_gpio_call)
-    u8g2_font_u8glib_4_tf                    0x08001ac0   Data        1782  u8g2_fonts.o(.constdata)
-    u8g2_cb_r0                               0x080021b8   Data          12  u8g2_setup.o(.constdata)
-    u8g2_cb_r1                               0x080021c4   Data          12  u8g2_setup.o(.constdata)
-    u8g2_cb_r2                               0x080021d0   Data          12  u8g2_setup.o(.constdata)
-    u8g2_cb_r3                               0x080021dc   Data          12  u8g2_setup.o(.constdata)
-    u8g2_cb_mirror                           0x080021e8   Data          12  u8g2_setup.o(.constdata)
-    u8g2_cb_mirror_vertical                  0x080021f4   Data          12  u8g2_setup.o(.constdata)
-    Region$$Table$$Base                      0x08002358   Number         0  anon$$obj.o(Region$$Table)
-    Region$$Table$$Limit                     0x08002378   Number         0  anon$$obj.o(Region$$Table)
-    __initial_sp                             0x20000808   Data           0  startup_stm32f10x_hd.o(STACK)
+    RCC_GetClocksFreq                        0x08000345   Thumb Code   192  stm32f10x_rcc.o(i.RCC_GetClocksFreq)
+    RCC_init                                 0x08000419   Thumb Code    74  rcc.o(i.RCC_init)
+    SVC_Handler                              0x08000469   Thumb Code     2  stm32f10x_it.o(i.SVC_Handler)
+    SysTick_Handler                          0x08000555   Thumb Code     2  stm32f10x_it.o(i.SysTick_Handler)
+    SystemInit                               0x08000559   Thumb Code    78  system_stm32f10x.o(i.SystemInit)
+    USART1_init                              0x080005b9   Thumb Code   104  usart.o(i.USART1_init)
+    UsageFault_Handler                       0x08000631   Thumb Code     4  stm32f10x_it.o(i.UsageFault_Handler)
+    __scatterload_copy                       0x08000635   Thumb Code    14  handlers.o(i.__scatterload_copy)
+    __scatterload_null                       0x08000643   Thumb Code     2  handlers.o(i.__scatterload_null)
+    __scatterload_zeroinit                   0x08000645   Thumb Code    14  handlers.o(i.__scatterload_zeroinit)
+    main                                     0x080007e3   Thumb Code    32  main.o(i.main)
+    ssd1306_init                             0x08000805   Thumb Code    18  main.o(i.ssd1306_init)
+    u8g2_ClearBuffer                         0x08000821   Thumb Code    26  u8g2_buffer.o(i.u8g2_ClearBuffer)
+    u8g2_DrawGlyph                           0x0800083b   Thumb Code    98  u8g2_font.o(i.u8g2_DrawGlyph)
+    u8g2_DrawHVLine                          0x0800089d   Thumb Code   220  u8g2_hvline.o(i.u8g2_DrawHVLine)
+    u8g2_DrawStr                             0x08000979   Thumb Code    32  u8g2_font.o(i.u8g2_DrawStr)
+    u8g2_IsIntersection                      0x0800099d   Thumb Code    58  u8g2_intersection.o(i.u8g2_IsIntersection)
+    u8g2_SendBuffer                          0x080009d7   Thumb Code    18  u8g2_buffer.o(i.u8g2_SendBuffer)
+    u8g2_SetFont                             0x080009e9   Thumb Code    32  u8g2_font.o(i.u8g2_SetFont)
+    u8g2_SetFontPosBaseline                  0x08000a09   Thumb Code     6  u8g2_font.o(i.u8g2_SetFontPosBaseline)
+    u8g2_SetMaxClipWindow                    0x08000a15   Thumb Code    32  u8g2_setup.o(i.u8g2_SetMaxClipWindow)
+    u8g2_SetupBuffer                         0x08000a35   Thumb Code    90  u8g2_setup.o(i.u8g2_SetupBuffer)
+    u8g2_Setup_ssd1306_i2c_128x64_noname_f   0x08000a91   Thumb Code    54  u8g2_d_setup.o(i.u8g2_Setup_ssd1306_i2c_128x64_noname_f)
+    u8g2_UpdateRefHeight                     0x08000ad5   Thumb Code   136  u8g2_font.o(i.u8g2_UpdateRefHeight)
+    u8g2_add_vector_x                        0x08000b5d   Thumb Code    42  u8g2_font.o(i.u8g2_add_vector_x)
+    u8g2_add_vector_y                        0x08000b87   Thumb Code    42  u8g2_font.o(i.u8g2_add_vector_y)
+    u8g2_draw_hv_line_2dir                   0x08000c77   Thumb Code    44  u8g2_hvline.o(i.u8g2_draw_hv_line_2dir)
+    u8g2_draw_l90_mirrorr_r0                 0x08000ca3   Thumb Code    60  u8g2_setup.o(i.u8g2_draw_l90_mirrorr_r0)
+    u8g2_draw_l90_r0                         0x08000cdf   Thumb Code    36  u8g2_setup.o(i.u8g2_draw_l90_r0)
+    u8g2_draw_l90_r1                         0x08000d03   Thumb Code    68  u8g2_setup.o(i.u8g2_draw_l90_r1)
+    u8g2_draw_l90_r2                         0x08000d47   Thumb Code    86  u8g2_setup.o(i.u8g2_draw_l90_r2)
+    u8g2_draw_l90_r3                         0x08000d9d   Thumb Code    80  u8g2_setup.o(i.u8g2_draw_l90_r3)
+    u8g2_draw_mirror_vertical_r0             0x08000ded   Thumb Code    60  u8g2_setup.o(i.u8g2_draw_mirror_vertical_r0)
+    u8g2_font_calc_vref_font                 0x08000eb9   Thumb Code     6  u8g2_font.o(i.u8g2_font_calc_vref_font)
+    u8g2_font_decode_get_signed_bits         0x08000ebf   Thumb Code    36  u8g2_font.o(i.u8g2_font_decode_get_signed_bits)
+    u8g2_font_decode_get_unsigned_bits       0x08000ee3   Thumb Code    66  u8g2_font.o(i.u8g2_font_decode_get_unsigned_bits)
+    u8g2_font_decode_glyph                   0x08000f25   Thumb Code   386  u8g2_font.o(i.u8g2_font_decode_glyph)
+    u8g2_font_decode_len                     0x080010a7   Thumb Code   176  u8g2_font.o(i.u8g2_font_decode_len)
+    u8g2_font_get_glyph_data                 0x08001199   Thumb Code   146  u8g2_font.o(i.u8g2_font_get_glyph_data)
+    u8g2_init                                0x08001285   Thumb Code    74  main.o(i.u8g2_init)
+    u8g2_is_intersection_decision_tree       0x080012e1   Thumb Code    48  u8g2_intersection.o(i.u8g2_is_intersection_decision_tree)
+    u8g2_ll_hvline_vertical_top_lsb          0x08001311   Thumb Code   238  u8g2_ll_hvline.o(i.u8g2_ll_hvline_vertical_top_lsb)
+    u8g2_loop                                0x08001401   Thumb Code    64  main.o(i.u8g2_loop)
+    u8g2_m_16_8_f                            0x08001465   Thumb Code    10  u8g2_d_memory.o(i.u8g2_m_16_8_f)
+    u8g2_read_font_info                      0x08001475   Thumb Code   224  u8g2_font.o(i.u8g2_read_font_info)
+    u8g2_update_dimension_r0                 0x08001621   Thumb Code    12  u8g2_setup.o(i.u8g2_update_dimension_r0)
+    u8g2_update_dimension_r1                 0x0800162d   Thumb Code    28  u8g2_setup.o(i.u8g2_update_dimension_r1)
+    u8g2_update_dimension_r2                 0x08001649   Thumb Code    12  u8g2_setup.o(i.u8g2_update_dimension_r2)
+    u8g2_update_dimension_r3                 0x08001655   Thumb Code    28  u8g2_setup.o(i.u8g2_update_dimension_r3)
+    u8g2_update_page_win_r0                  0x08001671   Thumb Code    32  u8g2_setup.o(i.u8g2_update_page_win_r0)
+    u8g2_update_page_win_r1                  0x08001691   Thumb Code    32  u8g2_setup.o(i.u8g2_update_page_win_r1)
+    u8g2_update_page_win_r2                  0x080016b1   Thumb Code    60  u8g2_setup.o(i.u8g2_update_page_win_r2)
+    u8g2_update_page_win_r3                  0x080016ed   Thumb Code    60  u8g2_setup.o(i.u8g2_update_page_win_r3)
+    u8x8_DrawTile                            0x08001729   Thumb Code    50  u8x8_display.o(i.u8x8_DrawTile)
+    u8x8_InitDisplay                         0x0800175b   Thumb Code    18  u8x8_display.o(i.u8x8_InitDisplay)
+    u8x8_RefreshDisplay                      0x0800176d   Thumb Code    18  u8x8_display.o(i.u8x8_RefreshDisplay)
+    u8x8_SetPowerSave                        0x0800177f   Thumb Code    20  u8x8_display.o(i.u8x8_SetPowerSave)
+    u8x8_Setup                               0x08001793   Thumb Code    42  u8x8_setup.o(i.u8x8_Setup)
+    u8x8_SetupDefaults                       0x080017bd   Thumb Code    38  u8x8_setup.o(i.u8x8_SetupDefaults)
+    u8x8_SetupMemory                         0x080017e9   Thumb Code    18  u8x8_display.o(i.u8x8_SetupMemory)
+    u8x8_ascii_next                          0x080017fb   Thumb Code    18  u8x8_8x8.o(i.u8x8_ascii_next)
+    u8x8_byte_EndTransfer                    0x0800180d   Thumb Code    18  u8x8_byte.o(i.u8x8_byte_EndTransfer)
+    u8x8_byte_SendByte                       0x0800181f   Thumb Code    16  u8x8_byte.o(i.u8x8_byte_SendByte)
+    u8x8_byte_SendBytes                      0x0800182f   Thumb Code    26  u8x8_byte.o(i.u8x8_byte_SendBytes)
+    u8x8_byte_StartTransfer                  0x08001849   Thumb Code    18  u8x8_byte.o(i.u8x8_byte_StartTransfer)
+    u8x8_byte_sw_i2c                         0x0800185b   Thumb Code   110  u8x8_byte.o(i.u8x8_byte_sw_i2c)
+    u8x8_cad_EndTransfer                     0x080018c9   Thumb Code    18  u8x8_cad.o(i.u8x8_cad_EndTransfer)
+    u8x8_cad_SendArg                         0x080018db   Thumb Code    20  u8x8_cad.o(i.u8x8_cad_SendArg)
+    u8x8_cad_SendCmd                         0x080018ef   Thumb Code    20  u8x8_cad.o(i.u8x8_cad_SendCmd)
+    u8x8_cad_SendData                        0x08001903   Thumb Code    26  u8x8_cad.o(i.u8x8_cad_SendData)
+    u8x8_cad_SendSequence                    0x0800191d   Thumb Code   124  u8x8_cad.o(i.u8x8_cad_SendSequence)
+    u8x8_cad_StartTransfer                   0x08001999   Thumb Code    18  u8x8_cad.o(i.u8x8_cad_StartTransfer)
+    u8x8_cad_ssd13xx_fast_i2c                0x080019ad   Thumb Code   208  u8x8_cad.o(i.u8x8_cad_ssd13xx_fast_i2c)
+    u8x8_d_helper_display_init               0x08001a81   Thumb Code    96  u8x8_display.o(i.u8x8_d_helper_display_init)
+    u8x8_d_helper_display_setup_memory       0x08001ae1   Thumb Code    12  u8x8_display.o(i.u8x8_d_helper_display_setup_memory)
+    u8x8_d_ssd1306_128x64_noname             0x08001aed   Thumb Code    76  u8x8_d_ssd1306_128x64_noname.o(i.u8x8_d_ssd1306_128x64_noname)
+    u8x8_dummy_cb                            0x08001c45   Thumb Code     8  u8x8_setup.o(i.u8x8_dummy_cb)
+    u8x8_gpio_and_delay                      0x08001c4d   Thumb Code   170  main.o(i.u8x8_gpio_and_delay)
+    u8x8_gpio_call                           0x08001cfd   Thumb Code    26  u8x8_gpio.o(i.u8x8_gpio_call)
+    u8x8_utf8_init                           0x08001d45   Thumb Code     8  u8x8_8x8.o(i.u8x8_utf8_init)
+    u8g2_font_u8glib_4_tf                    0x08001d4c   Data        1782  u8g2_fonts.o(.constdata)
+    u8g2_font_7x13_te                        0x08002442   Data        8564  u8g2_fonts.o(.constdata)
+    u8g2_cb_r0                               0x080045b8   Data          12  u8g2_setup.o(.constdata)
+    u8g2_cb_r1                               0x080045c4   Data          12  u8g2_setup.o(.constdata)
+    u8g2_cb_r2                               0x080045d0   Data          12  u8g2_setup.o(.constdata)
+    u8g2_cb_r3                               0x080045dc   Data          12  u8g2_setup.o(.constdata)
+    u8g2_cb_mirror                           0x080045e8   Data          12  u8g2_setup.o(.constdata)
+    u8g2_cb_mirror_vertical                  0x080045f4   Data          12  u8g2_setup.o(.constdata)
+    Region$$Table$$Base                      0x08004758   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x08004778   Number         0  anon$$obj.o(Region$$Table)
+    u8g2                                     0x2000001c   Data         148  main.o(.bss)
+    __initial_sp                             0x200008b0   Data           0  startup_stm32f10x_hd.o(STACK)
 
 
 
@@ -2292,154 +2312,166 @@ Memory Map of the image
 
   Image Entry point : 0x08000131
 
-  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x00002380, Max: 0x00040000, ABSOLUTE)
+  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x00004794, Max: 0x00040000, ABSOLUTE)
 
-    Execution Region ER_IROM1 (Base: 0x08000000, Size: 0x00002378, Max: 0x00040000, ABSOLUTE)
+    Execution Region ER_IROM1 (Base: 0x08000000, Size: 0x00004778, Max: 0x00040000, ABSOLUTE)
 
     Base Addr    Size         Type   Attr      Idx    E Section Name        Object
 
-    0x08000000   0x00000130   Data   RO         3224    RESET               startup_stm32f10x_hd.o
-    0x08000130   0x00000000   Code   RO         6141  * .ARM.Collect$$$$00000000  mc_w.l(entry.o)
-    0x08000130   0x00000004   Code   RO         6150    .ARM.Collect$$$$00000001  mc_w.l(entry2.o)
-    0x08000134   0x00000004   Code   RO         6153    .ARM.Collect$$$$00000004  mc_w.l(entry5.o)
-    0x08000138   0x00000000   Code   RO         6155    .ARM.Collect$$$$00000008  mc_w.l(entry7b.o)
-    0x08000138   0x00000000   Code   RO         6157    .ARM.Collect$$$$0000000A  mc_w.l(entry8b.o)
-    0x08000138   0x00000008   Code   RO         6158    .ARM.Collect$$$$0000000B  mc_w.l(entry9a.o)
-    0x08000140   0x00000000   Code   RO         6160    .ARM.Collect$$$$0000000D  mc_w.l(entry10a.o)
-    0x08000140   0x00000000   Code   RO         6162    .ARM.Collect$$$$0000000F  mc_w.l(entry11a.o)
-    0x08000140   0x00000004   Code   RO         6151    .ARM.Collect$$$$00002712  mc_w.l(entry2.o)
-    0x08000144   0x00000024   Code   RO         3225    .text               startup_stm32f10x_hd.o
-    0x08000168   0x00000024   Code   RO         6146    .text               mc_w.l(memseta.o)
-    0x0800018c   0x00000024   Code   RO         6164    .text               mc_w.l(init.o)
-    0x080001b0   0x00000004   Code   RO         3125    i.BusFault_Handler  stm32f10x_it.o
-    0x080001b4   0x00000002   Code   RO         3126    i.DebugMon_Handler  stm32f10x_it.o
+    0x08000000   0x00000130   Data   RO         3235    RESET               startup_stm32f10x_hd.o
+    0x08000130   0x00000000   Code   RO         6152  * .ARM.Collect$$$$00000000  mc_w.l(entry.o)
+    0x08000130   0x00000004   Code   RO         6161    .ARM.Collect$$$$00000001  mc_w.l(entry2.o)
+    0x08000134   0x00000004   Code   RO         6164    .ARM.Collect$$$$00000004  mc_w.l(entry5.o)
+    0x08000138   0x00000000   Code   RO         6166    .ARM.Collect$$$$00000008  mc_w.l(entry7b.o)
+    0x08000138   0x00000000   Code   RO         6168    .ARM.Collect$$$$0000000A  mc_w.l(entry8b.o)
+    0x08000138   0x00000008   Code   RO         6169    .ARM.Collect$$$$0000000B  mc_w.l(entry9a.o)
+    0x08000140   0x00000000   Code   RO         6171    .ARM.Collect$$$$0000000D  mc_w.l(entry10a.o)
+    0x08000140   0x00000000   Code   RO         6173    .ARM.Collect$$$$0000000F  mc_w.l(entry11a.o)
+    0x08000140   0x00000004   Code   RO         6162    .ARM.Collect$$$$00002712  mc_w.l(entry2.o)
+    0x08000144   0x00000024   Code   RO         3236    .text               startup_stm32f10x_hd.o
+    0x08000168   0x00000024   Code   RO         6157    .text               mc_w.l(memseta.o)
+    0x0800018c   0x00000024   Code   RO         6175    .text               mc_w.l(init.o)
+    0x080001b0   0x00000004   Code   RO         3136    i.BusFault_Handler  stm32f10x_it.o
+    0x080001b4   0x00000002   Code   RO         3137    i.DebugMon_Handler  stm32f10x_it.o
     0x080001b6   0x00000116   Code   RO         1251    i.GPIO_Init         stm32f10x_gpio.o
     0x080002cc   0x00000004   Code   RO         1258    i.GPIO_ResetBits    stm32f10x_gpio.o
     0x080002d0   0x00000004   Code   RO         1259    i.GPIO_SetBits      stm32f10x_gpio.o
-    0x080002d4   0x0000001c   Code   RO         3229    i.GPIO_clock_init   gpio.o
-    0x080002f0   0x00000028   Code   RO         3230    i.GPIO_init         gpio.o
-    0x08000318   0x00000004   Code   RO         3127    i.HardFault_Handler  stm32f10x_it.o
-    0x0800031c   0x00000004   Code   RO         3128    i.MemManage_Handler  stm32f10x_it.o
-    0x08000320   0x00000002   Code   RO         3129    i.NMI_Handler       stm32f10x_it.o
-    0x08000322   0x00000002   Code   RO         3130    i.PendSV_Handler    stm32f10x_it.o
+    0x080002d4   0x0000001c   Code   RO         3240    i.GPIO_clock_init   gpio.o
+    0x080002f0   0x00000028   Code   RO         3241    i.GPIO_init         gpio.o
+    0x08000318   0x00000004   Code   RO         3138    i.HardFault_Handler  stm32f10x_it.o
+    0x0800031c   0x00000004   Code   RO         3139    i.MemManage_Handler  stm32f10x_it.o
+    0x08000320   0x00000002   Code   RO         3140    i.NMI_Handler       stm32f10x_it.o
+    0x08000322   0x00000002   Code   RO         3141    i.PendSV_Handler    stm32f10x_it.o
     0x08000324   0x00000020   Code   RO         1669    i.RCC_APB2PeriphClockCmd  stm32f10x_rcc.o
-    0x08000344   0x00000050   Code   RO         3247    i.RCC_init          rcc.o
-    0x08000394   0x00000002   Code   RO         3131    i.SVC_Handler       stm32f10x_it.o
-    0x08000396   0x00000008   Code   RO         3188    i.SetSysClock       system_stm32f10x.o
-    0x0800039e   0x00000002   PAD
-    0x080003a0   0x000000e0   Code   RO         3189    i.SetSysClockTo72   system_stm32f10x.o
-    0x08000480   0x00000002   Code   RO         3132    i.SysTick_Handler   stm32f10x_it.o
-    0x08000482   0x00000002   PAD
-    0x08000484   0x00000060   Code   RO         3191    i.SystemInit        system_stm32f10x.o
-    0x080004e4   0x00000016   Code   RO         3248    i.Systick_ms        rcc.o
-    0x080004fa   0x00000050   Code   RO         3249    i.Systick_us        rcc.o
-    0x0800054a   0x00000002   PAD
-    0x0800054c   0x00000078   Code   RO         3272    i.USART1_init       usart.o
-    0x080005c4   0x00000004   Code   RO         3133    i.UsageFault_Handler  stm32f10x_it.o
-    0x080005c8   0x0000000e   Code   RO         6168    i.__scatterload_copy  mc_w.l(handlers.o)
-    0x080005d6   0x00000002   Code   RO         6169    i.__scatterload_null  mc_w.l(handlers.o)
-    0x080005d8   0x0000000e   Code   RO         6170    i.__scatterload_zeroinit  mc_w.l(handlers.o)
-    0x080005e6   0x00000010   Code   RO         5414    i.i2c_clear_scl     u8x8_byte.o
-    0x080005f6   0x00000010   Code   RO         5415    i.i2c_clear_sda     u8x8_byte.o
-    0x08000606   0x00000012   Code   RO         5416    i.i2c_delay         u8x8_byte.o
-    0x08000618   0x00000020   Code   RO         5417    i.i2c_init          u8x8_byte.o
-    0x08000638   0x0000002a   Code   RO         5418    i.i2c_read_bit      u8x8_byte.o
-    0x08000662   0x00000016   Code   RO         5419    i.i2c_read_scl_and_delay  u8x8_byte.o
-    0x08000678   0x00000010   Code   RO         5420    i.i2c_read_sda      u8x8_byte.o
-    0x08000688   0x0000003c   Code   RO         5421    i.i2c_start         u8x8_byte.o
-    0x080006c4   0x0000002a   Code   RO         5422    i.i2c_stop          u8x8_byte.o
-    0x080006ee   0x0000002a   Code   RO         5423    i.i2c_write_bit     u8x8_byte.o
-    0x08000718   0x0000005e   Code   RO         5424    i.i2c_write_byte    u8x8_byte.o
-    0x08000776   0x00000014   Code   RO         3067    i.main              main.o
-    0x0800078a   0x00000002   PAD
-    0x0800078c   0x00000038   Code   RO         3068    i.ssd1306_init      main.o
-    0x080007c4   0x0000001a   Code   RO         4150    i.u8g2_ClearBuffer  u8g2_buffer.o
-    0x080007de   0x000000dc   Code   RO         4715    i.u8g2_DrawHVLine   u8g2_hvline.o
-    0x080008ba   0x000000e8   Code   RO         4073    i.u8g2_DrawHXBM     u8g2_bitmap.o
-    0x080009a2   0x00000058   Code   RO         4076    i.u8g2_DrawXBM      u8g2_bitmap.o
-    0x080009fa   0x0000003a   Code   RO         4776    i.u8g2_IsIntersection  u8g2_intersection.o
-    0x08000a34   0x00000012   Code   RO         4153    i.u8g2_SendBuffer   u8g2_buffer.o
-    0x08000a46   0x00000020   Code   RO         4381    i.u8g2_SetFont      u8g2_font.o
-    0x08000a66   0x00000002   PAD
-    0x08000a68   0x0000000c   Code   RO         4384    i.u8g2_SetFontPosBaseline  u8g2_font.o
-    0x08000a74   0x00000020   Code   RO         4991    i.u8g2_SetMaxClipWindow  u8g2_setup.o
-    0x08000a94   0x0000005a   Code   RO         4992    i.u8g2_SetupBuffer  u8g2_setup.o
-    0x08000aee   0x00000002   PAD
-    0x08000af0   0x00000044   Code   RO         4345    i.u8g2_Setup_ssd1306_i2c_128x64_noname_f  u8g2_d_setup.o
-    0x08000b34   0x00000088   Code   RO         4391    i.u8g2_UpdateRefHeight  u8g2_font.o
-    0x08000bbc   0x0000007a   Code   RO         4994    i.u8g2_apply_clip_window  u8g2_setup.o
-    0x08000c36   0x0000004c   Code   RO         4719    i.u8g2_clip_intersection2  u8g2_hvline.o
-    0x08000c82   0x0000002c   Code   RO         4720    i.u8g2_draw_hv_line_2dir  u8g2_hvline.o
-    0x08000cae   0x0000003c   Code   RO         4995    i.u8g2_draw_l90_mirrorr_r0  u8g2_setup.o
-    0x08000cea   0x00000024   Code   RO         4996    i.u8g2_draw_l90_r0  u8g2_setup.o
-    0x08000d0e   0x00000044   Code   RO         4997    i.u8g2_draw_l90_r1  u8g2_setup.o
-    0x08000d52   0x00000056   Code   RO         4998    i.u8g2_draw_l90_r2  u8g2_setup.o
-    0x08000da8   0x00000050   Code   RO         4999    i.u8g2_draw_l90_r3  u8g2_setup.o
-    0x08000df8   0x0000003c   Code   RO         5000    i.u8g2_draw_mirror_vertical_r0  u8g2_setup.o
-    0x08000e34   0x00000006   Code   RO         4401    i.u8g2_font_calc_vref_font  u8g2_font.o
-    0x08000e3a   0x00000008   Code   RO         4408    i.u8g2_font_get_byte  u8g2_font.o
-    0x08000e42   0x00000018   Code   RO         4410    i.u8g2_font_get_word  u8g2_font.o
-    0x08000e5a   0x00000002   PAD
-    0x08000e5c   0x0000005c   Code   RO         3069    i.u8g2_init         main.o
-    0x08000eb8   0x00000030   Code   RO         4777    i.u8g2_is_intersection_decision_tree  u8g2_intersection.o
-    0x08000ee8   0x000000ee   Code   RO         4825    i.u8g2_ll_hvline_vertical_top_lsb  u8g2_ll_hvline.o
-    0x08000fd6   0x00000002   PAD
-    0x08000fd8   0x00000010   Code   RO         4332    i.u8g2_m_16_8_f     u8g2_d_memory.o
-    0x08000fe8   0x000000e0   Code   RO         4413    i.u8g2_read_font_info  u8g2_font.o
-    0x080010c8   0x00000036   Code   RO         4161    i.u8g2_send_buffer  u8g2_buffer.o
-    0x080010fe   0x00000036   Code   RO         4162    i.u8g2_send_tile_row  u8g2_buffer.o
-    0x08001134   0x00000060   Code   RO         5001    i.u8g2_update_dimension_common  u8g2_setup.o
-    0x08001194   0x0000000c   Code   RO         5002    i.u8g2_update_dimension_r0  u8g2_setup.o
-    0x080011a0   0x0000001c   Code   RO         5003    i.u8g2_update_dimension_r1  u8g2_setup.o
-    0x080011bc   0x0000000c   Code   RO         5004    i.u8g2_update_dimension_r2  u8g2_setup.o
-    0x080011c8   0x0000001c   Code   RO         5005    i.u8g2_update_dimension_r3  u8g2_setup.o
-    0x080011e4   0x00000020   Code   RO         5006    i.u8g2_update_page_win_r0  u8g2_setup.o
-    0x08001204   0x00000020   Code   RO         5007    i.u8g2_update_page_win_r1  u8g2_setup.o
-    0x08001224   0x0000003c   Code   RO         5008    i.u8g2_update_page_win_r2  u8g2_setup.o
-    0x08001260   0x0000003c   Code   RO         5009    i.u8g2_update_page_win_r3  u8g2_setup.o
-    0x0800129c   0x00000032   Code   RO         5778    i.u8x8_DrawTile     u8x8_display.o
-    0x080012ce   0x00000012   Code   RO         5780    i.u8x8_InitDisplay  u8x8_display.o
-    0x080012e0   0x00000012   Code   RO         5782    i.u8x8_RefreshDisplay  u8x8_display.o
-    0x080012f2   0x00000014   Code   RO         5785    i.u8x8_SetPowerSave  u8x8_display.o
-    0x08001306   0x0000002a   Code   RO         5956    i.u8x8_Setup        u8x8_setup.o
-    0x08001330   0x0000002c   Code   RO         5957    i.u8x8_SetupDefaults  u8x8_setup.o
-    0x0800135c   0x00000012   Code   RO         5786    i.u8x8_SetupMemory  u8x8_display.o
-    0x0800136e   0x00000012   Code   RO         5429    i.u8x8_byte_EndTransfer  u8x8_byte.o
-    0x08001380   0x00000010   Code   RO         5430    i.u8x8_byte_SendByte  u8x8_byte.o
-    0x08001390   0x0000001a   Code   RO         5431    i.u8x8_byte_SendBytes  u8x8_byte.o
-    0x080013aa   0x00000012   Code   RO         5433    i.u8x8_byte_StartTransfer  u8x8_byte.o
-    0x080013bc   0x0000006e   Code   RO         5438    i.u8x8_byte_sw_i2c  u8x8_byte.o
-    0x0800142a   0x00000012   Code   RO         5566    i.u8x8_cad_EndTransfer  u8x8_cad.o
-    0x0800143c   0x00000014   Code   RO         5567    i.u8x8_cad_SendArg  u8x8_cad.o
-    0x08001450   0x00000014   Code   RO         5568    i.u8x8_cad_SendCmd  u8x8_cad.o
-    0x08001464   0x0000001a   Code   RO         5569    i.u8x8_cad_SendData  u8x8_cad.o
-    0x0800147e   0x0000007c   Code   RO         5571    i.u8x8_cad_SendSequence  u8x8_cad.o
-    0x080014fa   0x00000012   Code   RO         5572    i.u8x8_cad_StartTransfer  u8x8_cad.o
-    0x0800150c   0x000000d4   Code   RO         5575    i.u8x8_cad_ssd13xx_fast_i2c  u8x8_cad.o
-    0x080015e0   0x00000060   Code   RO         5787    i.u8x8_d_helper_display_init  u8x8_display.o
-    0x08001640   0x0000000c   Code   RO         5788    i.u8x8_d_helper_display_setup_memory  u8x8_display.o
-    0x0800164c   0x00000054   Code   RO         6086    i.u8x8_d_ssd1306_128x64_noname  u8x8_d_ssd1306_128x64_noname.o
-    0x080016a0   0x00000104   Code   RO         6088    i.u8x8_d_ssd1306_sh1106_generic  u8x8_d_ssd1306_128x64_noname.o
-    0x080017a4   0x00000008   Code   RO         5959    i.u8x8_dummy_cb     u8x8_setup.o
-    0x080017ac   0x000000cc   Code   RO         3070    i.u8x8_gpio_and_delay  main.o
-    0x08001878   0x0000001a   Code   RO         5878    i.u8x8_gpio_call    u8x8_gpio.o
-    0x08001892   0x0000002e   Code   RO         5583    i.u8x8_i2c_data_transfer  u8x8_cad.o
-    0x080018c0   0x00000200   Data   RO         3071    .constdata          main.o
-    0x08001ac0   0x000006f6   Data   RO         4701    .constdata          u8g2_fonts.o
-    0x080021b6   0x00000002   PAD
-    0x080021b8   0x00000048   Data   RO         5010    .constdata          u8g2_setup.o
-    0x08002200   0x00000158   Data   RO         6090    .constdata          u8x8_d_ssd1306_128x64_noname.o
-    0x08002358   0x00000020   Data   RO         6166    Region$$Table       anon$$obj.o
+    0x08000344   0x000000d4   Code   RO         1677    i.RCC_GetClocksFreq  stm32f10x_rcc.o
+    0x08000418   0x00000050   Code   RO         3258    i.RCC_init          rcc.o
+    0x08000468   0x00000002   Code   RO         3142    i.SVC_Handler       stm32f10x_it.o
+    0x0800046a   0x00000008   Code   RO         3199    i.SetSysClock       system_stm32f10x.o
+    0x08000472   0x00000002   PAD
+    0x08000474   0x000000e0   Code   RO         3200    i.SetSysClockTo72   system_stm32f10x.o
+    0x08000554   0x00000002   Code   RO         3143    i.SysTick_Handler   stm32f10x_it.o
+    0x08000556   0x00000002   PAD
+    0x08000558   0x00000060   Code   RO         3202    i.SystemInit        system_stm32f10x.o
+    0x080005b8   0x00000078   Code   RO         3283    i.USART1_init       usart.o
+    0x08000630   0x00000004   Code   RO         3144    i.UsageFault_Handler  stm32f10x_it.o
+    0x08000634   0x0000000e   Code   RO         6179    i.__scatterload_copy  mc_w.l(handlers.o)
+    0x08000642   0x00000002   Code   RO         6180    i.__scatterload_null  mc_w.l(handlers.o)
+    0x08000644   0x0000000e   Code   RO         6181    i.__scatterload_zeroinit  mc_w.l(handlers.o)
+    0x08000652   0x00000010   Code   RO         5425    i.i2c_clear_scl     u8x8_byte.o
+    0x08000662   0x00000010   Code   RO         5426    i.i2c_clear_sda     u8x8_byte.o
+    0x08000672   0x00000012   Code   RO         5427    i.i2c_delay         u8x8_byte.o
+    0x08000684   0x00000020   Code   RO         5428    i.i2c_init          u8x8_byte.o
+    0x080006a4   0x0000002a   Code   RO         5429    i.i2c_read_bit      u8x8_byte.o
+    0x080006ce   0x00000016   Code   RO         5430    i.i2c_read_scl_and_delay  u8x8_byte.o
+    0x080006e4   0x00000010   Code   RO         5431    i.i2c_read_sda      u8x8_byte.o
+    0x080006f4   0x0000003c   Code   RO         5432    i.i2c_start         u8x8_byte.o
+    0x08000730   0x0000002a   Code   RO         5433    i.i2c_stop          u8x8_byte.o
+    0x0800075a   0x0000002a   Code   RO         5434    i.i2c_write_bit     u8x8_byte.o
+    0x08000784   0x0000005e   Code   RO         5435    i.i2c_write_byte    u8x8_byte.o
+    0x080007e2   0x00000020   Code   RO         3067    i.main              main.o
+    0x08000802   0x00000002   PAD
+    0x08000804   0x0000001c   Code   RO         3068    i.ssd1306_init      main.o
+    0x08000820   0x0000001a   Code   RO         4161    i.u8g2_ClearBuffer  u8g2_buffer.o
+    0x0800083a   0x00000062   Code   RO         4370    i.u8g2_DrawGlyph    u8g2_font.o
+    0x0800089c   0x000000dc   Code   RO         4726    i.u8g2_DrawHVLine   u8g2_hvline.o
+    0x08000978   0x00000024   Code   RO         4373    i.u8g2_DrawStr      u8g2_font.o
+    0x0800099c   0x0000003a   Code   RO         4787    i.u8g2_IsIntersection  u8g2_intersection.o
+    0x080009d6   0x00000012   Code   RO         4164    i.u8g2_SendBuffer   u8g2_buffer.o
+    0x080009e8   0x00000020   Code   RO         4392    i.u8g2_SetFont      u8g2_font.o
+    0x08000a08   0x0000000c   Code   RO         4395    i.u8g2_SetFontPosBaseline  u8g2_font.o
+    0x08000a14   0x00000020   Code   RO         5002    i.u8g2_SetMaxClipWindow  u8g2_setup.o
+    0x08000a34   0x0000005a   Code   RO         5003    i.u8g2_SetupBuffer  u8g2_setup.o
+    0x08000a8e   0x00000002   PAD
+    0x08000a90   0x00000044   Code   RO         4356    i.u8g2_Setup_ssd1306_i2c_128x64_noname_f  u8g2_d_setup.o
+    0x08000ad4   0x00000088   Code   RO         4402    i.u8g2_UpdateRefHeight  u8g2_font.o
+    0x08000b5c   0x0000002a   Code   RO         4403    i.u8g2_add_vector_x  u8g2_font.o
+    0x08000b86   0x0000002a   Code   RO         4404    i.u8g2_add_vector_y  u8g2_font.o
+    0x08000bb0   0x0000007a   Code   RO         5005    i.u8g2_apply_clip_window  u8g2_setup.o
+    0x08000c2a   0x0000004c   Code   RO         4730    i.u8g2_clip_intersection2  u8g2_hvline.o
+    0x08000c76   0x0000002c   Code   RO         4731    i.u8g2_draw_hv_line_2dir  u8g2_hvline.o
+    0x08000ca2   0x0000003c   Code   RO         5006    i.u8g2_draw_l90_mirrorr_r0  u8g2_setup.o
+    0x08000cde   0x00000024   Code   RO         5007    i.u8g2_draw_l90_r0  u8g2_setup.o
+    0x08000d02   0x00000044   Code   RO         5008    i.u8g2_draw_l90_r1  u8g2_setup.o
+    0x08000d46   0x00000056   Code   RO         5009    i.u8g2_draw_l90_r2  u8g2_setup.o
+    0x08000d9c   0x00000050   Code   RO         5010    i.u8g2_draw_l90_r3  u8g2_setup.o
+    0x08000dec   0x0000003c   Code   RO         5011    i.u8g2_draw_mirror_vertical_r0  u8g2_setup.o
+    0x08000e28   0x00000090   Code   RO         4405    i.u8g2_draw_string  u8g2_font.o
+    0x08000eb8   0x00000006   Code   RO         4412    i.u8g2_font_calc_vref_font  u8g2_font.o
+    0x08000ebe   0x00000024   Code   RO         4414    i.u8g2_font_decode_get_signed_bits  u8g2_font.o
+    0x08000ee2   0x00000042   Code   RO         4415    i.u8g2_font_decode_get_unsigned_bits  u8g2_font.o
+    0x08000f24   0x00000182   Code   RO         4416    i.u8g2_font_decode_glyph  u8g2_font.o
+    0x080010a6   0x000000b0   Code   RO         4417    i.u8g2_font_decode_len  u8g2_font.o
+    0x08001156   0x0000003a   Code   RO         4418    i.u8g2_font_draw_glyph  u8g2_font.o
+    0x08001190   0x00000008   Code   RO         4419    i.u8g2_font_get_byte  u8g2_font.o
+    0x08001198   0x00000092   Code   RO         4420    i.u8g2_font_get_glyph_data  u8g2_font.o
+    0x0800122a   0x00000018   Code   RO         4421    i.u8g2_font_get_word  u8g2_font.o
+    0x08001242   0x00000040   Code   RO         4422    i.u8g2_font_setup_decode  u8g2_font.o
+    0x08001282   0x00000002   PAD
+    0x08001284   0x0000005c   Code   RO         3069    i.u8g2_init         main.o
+    0x080012e0   0x00000030   Code   RO         4788    i.u8g2_is_intersection_decision_tree  u8g2_intersection.o
+    0x08001310   0x000000ee   Code   RO         4836    i.u8g2_ll_hvline_vertical_top_lsb  u8g2_ll_hvline.o
+    0x080013fe   0x00000002   PAD
+    0x08001400   0x00000064   Code   RO         3070    i.u8g2_loop         main.o
+    0x08001464   0x00000010   Code   RO         4343    i.u8g2_m_16_8_f     u8g2_d_memory.o
+    0x08001474   0x000000e0   Code   RO         4424    i.u8g2_read_font_info  u8g2_font.o
+    0x08001554   0x00000036   Code   RO         4172    i.u8g2_send_buffer  u8g2_buffer.o
+    0x0800158a   0x00000036   Code   RO         4173    i.u8g2_send_tile_row  u8g2_buffer.o
+    0x080015c0   0x00000060   Code   RO         5012    i.u8g2_update_dimension_common  u8g2_setup.o
+    0x08001620   0x0000000c   Code   RO         5013    i.u8g2_update_dimension_r0  u8g2_setup.o
+    0x0800162c   0x0000001c   Code   RO         5014    i.u8g2_update_dimension_r1  u8g2_setup.o
+    0x08001648   0x0000000c   Code   RO         5015    i.u8g2_update_dimension_r2  u8g2_setup.o
+    0x08001654   0x0000001c   Code   RO         5016    i.u8g2_update_dimension_r3  u8g2_setup.o
+    0x08001670   0x00000020   Code   RO         5017    i.u8g2_update_page_win_r0  u8g2_setup.o
+    0x08001690   0x00000020   Code   RO         5018    i.u8g2_update_page_win_r1  u8g2_setup.o
+    0x080016b0   0x0000003c   Code   RO         5019    i.u8g2_update_page_win_r2  u8g2_setup.o
+    0x080016ec   0x0000003c   Code   RO         5020    i.u8g2_update_page_win_r3  u8g2_setup.o
+    0x08001728   0x00000032   Code   RO         5789    i.u8x8_DrawTile     u8x8_display.o
+    0x0800175a   0x00000012   Code   RO         5791    i.u8x8_InitDisplay  u8x8_display.o
+    0x0800176c   0x00000012   Code   RO         5793    i.u8x8_RefreshDisplay  u8x8_display.o
+    0x0800177e   0x00000014   Code   RO         5796    i.u8x8_SetPowerSave  u8x8_display.o
+    0x08001792   0x0000002a   Code   RO         5967    i.u8x8_Setup        u8x8_setup.o
+    0x080017bc   0x0000002c   Code   RO         5968    i.u8x8_SetupDefaults  u8x8_setup.o
+    0x080017e8   0x00000012   Code   RO         5797    i.u8x8_SetupMemory  u8x8_display.o
+    0x080017fa   0x00000012   Code   RO         5304    i.u8x8_ascii_next   u8x8_8x8.o
+    0x0800180c   0x00000012   Code   RO         5440    i.u8x8_byte_EndTransfer  u8x8_byte.o
+    0x0800181e   0x00000010   Code   RO         5441    i.u8x8_byte_SendByte  u8x8_byte.o
+    0x0800182e   0x0000001a   Code   RO         5442    i.u8x8_byte_SendBytes  u8x8_byte.o
+    0x08001848   0x00000012   Code   RO         5444    i.u8x8_byte_StartTransfer  u8x8_byte.o
+    0x0800185a   0x0000006e   Code   RO         5449    i.u8x8_byte_sw_i2c  u8x8_byte.o
+    0x080018c8   0x00000012   Code   RO         5577    i.u8x8_cad_EndTransfer  u8x8_cad.o
+    0x080018da   0x00000014   Code   RO         5578    i.u8x8_cad_SendArg  u8x8_cad.o
+    0x080018ee   0x00000014   Code   RO         5579    i.u8x8_cad_SendCmd  u8x8_cad.o
+    0x08001902   0x0000001a   Code   RO         5580    i.u8x8_cad_SendData  u8x8_cad.o
+    0x0800191c   0x0000007c   Code   RO         5582    i.u8x8_cad_SendSequence  u8x8_cad.o
+    0x08001998   0x00000012   Code   RO         5583    i.u8x8_cad_StartTransfer  u8x8_cad.o
+    0x080019aa   0x00000002   PAD
+    0x080019ac   0x000000d4   Code   RO         5586    i.u8x8_cad_ssd13xx_fast_i2c  u8x8_cad.o
+    0x08001a80   0x00000060   Code   RO         5798    i.u8x8_d_helper_display_init  u8x8_display.o
+    0x08001ae0   0x0000000c   Code   RO         5799    i.u8x8_d_helper_display_setup_memory  u8x8_display.o
+    0x08001aec   0x00000054   Code   RO         6097    i.u8x8_d_ssd1306_128x64_noname  u8x8_d_ssd1306_128x64_noname.o
+    0x08001b40   0x00000104   Code   RO         6099    i.u8x8_d_ssd1306_sh1106_generic  u8x8_d_ssd1306_128x64_noname.o
+    0x08001c44   0x00000008   Code   RO         5970    i.u8x8_dummy_cb     u8x8_setup.o
+    0x08001c4c   0x000000b0   Code   RO         3071    i.u8x8_gpio_and_delay  main.o
+    0x08001cfc   0x0000001a   Code   RO         5889    i.u8x8_gpio_call    u8x8_gpio.o
+    0x08001d16   0x0000002e   Code   RO         5594    i.u8x8_i2c_data_transfer  u8x8_cad.o
+    0x08001d44   0x00000008   Code   RO         5313    i.u8x8_utf8_init    u8x8_8x8.o
+    0x08001d4c   0x0000286a   Data   RO         4712    .constdata          u8g2_fonts.o
+    0x080045b6   0x00000002   PAD
+    0x080045b8   0x00000048   Data   RO         5021    .constdata          u8g2_setup.o
+    0x08004600   0x00000158   Data   RO         6101    .constdata          u8x8_d_ssd1306_128x64_noname.o
+    0x08004758   0x00000020   Data   RO         6177    Region$$Table       anon$$obj.o
 
 
-    Execution Region RW_IRAM1 (Base: 0x20000000, Size: 0x00000808, Max: 0x0000c000, ABSOLUTE)
+    Execution Region RW_IRAM1 (Base: 0x20000000, Size: 0x000008b0, Max: 0x0000c000, ABSOLUTE)
 
     Base Addr    Size         Type   Attr      Idx    E Section Name        Object
 
-    0x20000000   0x00000006   Data   RW         5585    .data               u8x8_cad.o
-    0x20000006   0x00000002   PAD
-    0x20000008   0x00000400   Zero   RW         4333    .bss                u8g2_d_memory.o
-    0x20000408   0x00000400   Zero   RW         3222    STACK               startup_stm32f10x_hd.o
+    0x20000000   0x00000014   Data   RW         1697    .data               stm32f10x_rcc.o
+    0x20000014   0x00000006   Data   RW         5596    .data               u8x8_cad.o
+    0x2000001a   0x00000002   PAD
+    0x2000001c   0x00000094   Zero   RW         3072    .bss                main.o
+    0x200000b0   0x00000400   Zero   RW         4344    .bss                u8g2_d_memory.o
+    0x200004b0   0x00000400   Zero   RW         3233    STACK               startup_stm32f10x_hd.o
 
 
 ==============================================================================
@@ -2451,36 +2483,36 @@ Image component sizes
 
          0          0          0          0          0       4532   core_cm3.o
         68         10          0          0          0        914   gpio.o
-       372         30        512          0          0     170287   main.o
-         0          0          0          0          0     213140   misc.o
-       182          6          0          0          0       1537   rcc.o
-        36          8        304          0       1024        824   startup_stm32f10x_hd.o
-       286          0          0          0          0       3052   stm32f10x_gpio.o
-        26          0          0          0          0       4118   stm32f10x_it.o
-        32          6          0          0          0        581   stm32f10x_rcc.o
-       328         28          0          0          0       2037   system_stm32f10x.o
-       320          0          0          0          0       2239   u8g2_bitmap.o
-       152          0          0          0          0       2837   u8g2_buffer.o
-        16          6          0          0       1024        876   u8g2_d_memory.o
+       428         70          0          0        148     170662   main.o
+         0          0          0          0          0     221952   misc.o
+        80          6          0          0          0        455   rcc.o
+        36          8        304          0       1024        828   startup_stm32f10x_hd.o
+       286          0          0          0          0       3056   stm32f10x_gpio.o
+        26          0          0          0          0       4126   stm32f10x_it.o
+       244         26          0         20          0       3905   stm32f10x_rcc.o
+       328         28          0          0          0       2045   system_stm32f10x.o
+       152          0          0          0          0       2845   u8g2_buffer.o
+        16          6          0          0       1024        880   u8g2_d_memory.o
         68         14          0          0          0       1097   u8g2_d_setup.o
-       442          6          0          0          0       4385   u8g2_font.o
-         0          0       1782          0          0        600   u8g2_fonts.o
-       340          0          0          0          0       2671   u8g2_hvline.o
+      1736         10          0          0          0      13860   u8g2_font.o
+         0          0      10346          0          0        666   u8g2_fonts.o
+       340          0          0          0          0       2675   u8g2_hvline.o
        106          0          0          0          0       1559   u8g2_intersection.o
-       238          0          0          0          0       1434   u8g2_ll_hvline.o
-       994          0         72          0          0     161602   u8g2_setup.o
-       588          0          0          0          0       9120   u8x8_byte.o
-       484         10          0          6          0       8408   u8x8_cad.o
-       344         26        344          0          0      20719   u8x8_d_ssd1306_128x64_noname.o
-       232          0          0          0          0       4466   u8x8_display.o
+       238          0          0          0          0       1438   u8g2_ll_hvline.o
+       994          0         72          0          0     161614   u8g2_setup.o
+        26          0          0          0          0       1083   u8x8_8x8.o
+       588          0          0          0          0       9136   u8x8_byte.o
+       484         10          0          6          0       8412   u8x8_cad.o
+       344         26        344          0          0      20723   u8x8_d_ssd1306_128x64_noname.o
+       232          0          0          0          0       4482   u8x8_display.o
         26          0          0          0          0        621   u8x8_gpio.o
-        94          6          0          0          0       1922   u8x8_setup.o
+        94          6          0          0          0       1926   u8x8_setup.o
        120         16          0          0          0        470   usart.o
 
     ----------------------------------------------------------------------
-      5910        172       3048          8       2048     626048   Object Totals
+      7074        236      11100         28       2196     645962   Object Totals
          0          0         32          0          0          0   (incl. Generated)
-        16          0          2          2          0          0   (incl. Padding)
+        14          0          2          2          0          0   (incl. Padding)
 
     ----------------------------------------------------------------------
 
@@ -2518,15 +2550,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-      6032        188       3048          8       2048     621280   Grand Totals
-      6032        188       3048          8       2048     621280   ELF Image Totals
-      6032        188       3048          8          0          0   ROM Totals
+      7196        252      11100         28       2196     640570   Grand Totals
+      7196        252      11100         28       2196     640570   ELF Image Totals
+      7196        252      11100         28          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)                 9080 (   8.87kB)
-    Total RW  Size (RW Data + ZI Data)              2056 (   2.01kB)
-    Total ROM Size (Code + RO Data + RW Data)       9088 (   8.88kB)
+    Total RO  Size (Code + RO Data)                18296 (  17.87kB)
+    Total RW  Size (RW Data + ZI Data)              2224 (   2.17kB)
+    Total ROM Size (Code + RO Data + RW Data)      18324 (  17.89kB)
 
 ==============================================================================
 

@@ -3,41 +3,17 @@
 #include "RCC.h"
 #include "GPIO.h"
 #include "USART.h"
-static const unsigned char bmp1[] U8X8_PROGMEM ={
-0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,
-0X00,0X70,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0XFC,0X00,0X00,0X00,0X00,0X00,0X00,
-0X00,0X8E,0X01,0X00,0X00,0X03,0X00,0X00,0X00,0X06,0X03,0X00,0X00,0X03,0X00,0X00,
-0X00,0X03,0X03,0X00,0X80,0X01,0X00,0X00,0X80,0X01,0X03,0X00,0X80,0X01,0X00,0X00,
-0X80,0X80,0X03,0X00,0XC0,0X00,0X00,0X00,0XC0,0XC0,0X01,0X00,0X40,0X00,0X00,0X00,
-0X60,0XC0,0X00,0X00,0X6C,0X10,0X00,0X00,0X60,0X00,0X00,0X00,0X7F,0X1C,0X00,0X00,
-0X20,0X00,0X00,0X80,0XFB,0X0F,0X00,0X00,0X30,0X40,0X00,0X80,0XF9,0X03,0X00,0X00,
-0X30,0XE0,0X00,0XC0,0X19,0X00,0X00,0X00,0X30,0X60,0X00,0XF0,0X0D,0X00,0X30,0X00,
-0X30,0X70,0X8C,0XD8,0X0D,0X00,0X30,0X00,0X30,0X78,0XCE,0XF9,0X86,0X0F,0X3B,0X00,
-0X70,0X3C,0XF6,0X3C,0XC6,0X8F,0XFB,0X03,0XF0,0X3F,0XFE,0X1F,0XC6,0XFF,0XFD,0X01,
-0XE0,0X33,0X9F,0X1F,0XC3,0XFD,0X07,0X00,0X00,0X38,0X0F,0X1C,0X03,0XD8,0X03,0X00,
-0X00,0X18,0X00,0X1E,0X03,0X80,0X01,0X00,0X00,0X18,0X00,0X8E,0X03,0X00,0X00,0X00,
-0X00,0X18,0X00,0X86,0X01,0X00,0X00,0X00,0X00,0X0C,0X00,0X80,0X03,0X00,0X00,0X00,
-0X80,0X0D,0X00,0X80,0X03,0X00,0X00,0X00,0XC0,0X0F,0X00,0X00,0X03,0X00,0X00,0X00,
-0XE0,0X06,0X00,0X00,0X00,0X00,0X00,0X00,0X60,0X07,0X00,0X00,0X00,0X00,0X00,0X00,
-0XE0,0X03,0X00,0X04,0X00,0X02,0X00,0X00,0XE0,0X01,0X00,0X94,0X9A,0XCA,0X04,0X00,
-0X80,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,
-0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,
-0X00,0X00,0X00,0X00,0X00,0X00,0X00,0X00,
-};
+#include "bmp.h"
+u8g2_t u8g2;
 uint8_t u8x8_gpio_and_delay(u8x8_t *u8x8, uint8_t msg, uint8_t arg_int, void *arg_ptr) {
     switch (msg) {
         case U8X8_MSG_DELAY_100NANO: // delay arg_int * 100 nano seconds
-            __NOP();
             break;
         case U8X8_MSG_DELAY_10MICRO: // delay arg_int * 10 micro seconds
-            for (uint16_t n = 0; n < 320; n++)
-                __NOP();
             break;
         case U8X8_MSG_DELAY_MILLI:   // delay arg_int * 1 milli second
-            Systick_ms(1);
             break;
         case U8X8_MSG_DELAY_I2C:     // arg_int is the I2C speed in 100KHz, e.g. 4 = 400 KHz
-            Systick_us(5);
             break;                    // arg_int=1: delay by 5us, arg_int = 4: delay by 1.25us
         case U8X8_MSG_GPIO_I2C_CLOCK: // arg_int=0: Output low at I2C clock pin
             arg_int ? GPIO_SetBits(GPIOC, GPIO_Pin_12) : GPIO_ResetBits(GPIOC, GPIO_Pin_12);  
@@ -73,7 +49,6 @@ void u8g2_init(u8g2_t *u8g2)
 	I2C_GPIO_Sturct.GPIO_Pin = GPIO_Pin_11|GPIO_Pin_12;
 	I2C_GPIO_Sturct.GPIO_Speed = GPIO_Speed_50MHz;	
 	GPIO_Init(GPIOC,&I2C_GPIO_Sturct);
-	
 	u8g2_Setup_ssd1306_i2c_128x64_noname_f(u8g2,U8G2_R0,u8x8_byte_sw_i2c,u8x8_gpio_and_delay);
 	u8g2_InitDisplay(u8g2);
 	u8g2_SetPowerSave(u8g2,0);
@@ -81,23 +56,33 @@ void u8g2_init(u8g2_t *u8g2)
 }
 void ssd1306_init(void)
 {
-	u8g2_t u8g2;
 	u8g2_init(&u8g2);
-	u8g2_SetFont(&u8g2, u8g2_font_u8glib_4_tf);
-	u8g2_DrawXBM(&u8g2, 32, 0, 64, 37, bmp1);
-//	u8g2_DrawStr(&u8g2, 0, 4, "Hello,world.");
-//	u8g2_DrawStr(&u8g2, 0, 9, "I hate this world.");
-	u8g2_SendBuffer(&u8g2);
+    u8g2_SetFont(&u8g2,u8g2_font_7x13_te);
+}
+void u8g2_loop()
+{
+    RCC_ClocksTypeDef RCC_Clocks;
+    RCC_GetClocksFreq(&RCC_Clocks);
+    uint8_t i;
+    for (i = 0; i < 64; i++)
+    {
+        u8g2_ClearBuffer(&u8g2);
+        u8g2_DrawStr(&u8g2, 0, i,"Hello,world!");
+        u8g2_DrawStr(&u8g2, 0, i+10,"I Hate world.");
+        u8g2_SendBuffer(&u8g2);
+    }
 }
 int main()
-{
+{    
 	RCC_init();
 	GPIO_init();
 	USART1_init();
 	ssd1306_init();
+	RCC_ClocksTypeDef RCC_Clocks;
 	while(1)
 	{
-		
+        RCC_GetClocksFreq(&RCC_Clocks);
+        u8g2_loop();
 	}
 }	
 

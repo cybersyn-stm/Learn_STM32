@@ -27,7 +27,14 @@ void I2C_Write_SDA(uint8_t bit)
 }
 void I2C_Write_SCL(uint8_t bit)
 {
-	GPIO_SetBits(GPIOC,GPIO_Pin_12);
+	if(bit)
+	{
+		GPIO_SetBits(GPIOC,GPIO_Pin_12);
+	}
+	else
+	{
+		GPIO_ResetBits(GPIOC,GPIO_Pin_12);
+	}
 }
 uint8_t I2C_Read_SDA()
 {
@@ -40,11 +47,11 @@ void SSD1306_128X64_INIT(I2C_T *i2c_t)
 	i2c_t->SCL_WRITE = I2C_Write_SCL;
 	i2c_t->SDA_READ = I2C_Read_SDA;
 	i2c_t->DELAY_US = Systick_us;
-
 	i2c_t->I2C_SETTING_INIT();
 }
 I2C_T i2c_t;
 int main()
 {
 	SSD1306_128X64_INIT(&i2c_t);
+	I2C_SEND_SSD1306(&i2c_t,0x78,0x00,0xAF);
 }	

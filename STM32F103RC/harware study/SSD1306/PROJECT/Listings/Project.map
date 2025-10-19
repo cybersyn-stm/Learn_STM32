@@ -876,15 +876,15 @@ Image Symbol Table
     i.RCC_APB2PeriphClockCmd                 0x080004a0   Section        0  stm32f10x_rcc.o(i.RCC_APB2PeriphClockCmd)
     i.SSD1306_Command                        0x080004c0   Section        0  ssd1306.o(i.SSD1306_Command)
     i.SSD1306_Init                           0x080004ec   Section        0  ssd1306.o(i.SSD1306_Init)
-    i.SVC_Handler                            0x0800057e   Section        0  stm32f10x_it.o(i.SVC_Handler)
-    i.SetSysClock                            0x08000580   Section        0  system_stm32f10x.o(i.SetSysClock)
-    SetSysClock                              0x08000581   Thumb Code     8  system_stm32f10x.o(i.SetSysClock)
-    i.SetSysClockTo72                        0x08000588   Section        0  system_stm32f10x.o(i.SetSysClockTo72)
-    SetSysClockTo72                          0x08000589   Thumb Code   214  system_stm32f10x.o(i.SetSysClockTo72)
-    i.SysTick_Handler                        0x08000668   Section        0  stm32f10x_it.o(i.SysTick_Handler)
-    i.SystemInit                             0x0800066c   Section        0  system_stm32f10x.o(i.SystemInit)
-    i.UsageFault_Handler                     0x080006cc   Section        0  stm32f10x_it.o(i.UsageFault_Handler)
-    i.main                                   0x080006d0   Section        0  main.o(i.main)
+    i.SVC_Handler                            0x080004fa   Section        0  stm32f10x_it.o(i.SVC_Handler)
+    i.SetSysClock                            0x080004fc   Section        0  system_stm32f10x.o(i.SetSysClock)
+    SetSysClock                              0x080004fd   Thumb Code     8  system_stm32f10x.o(i.SetSysClock)
+    i.SetSysClockTo72                        0x08000504   Section        0  system_stm32f10x.o(i.SetSysClockTo72)
+    SetSysClockTo72                          0x08000505   Thumb Code   214  system_stm32f10x.o(i.SetSysClockTo72)
+    i.SysTick_Handler                        0x080005e4   Section        0  stm32f10x_it.o(i.SysTick_Handler)
+    i.SystemInit                             0x080005e8   Section        0  system_stm32f10x.o(i.SystemInit)
+    i.UsageFault_Handler                     0x08000648   Section        0  stm32f10x_it.o(i.UsageFault_Handler)
+    i.main                                   0x0800064c   Section        0  main.o(i.main)
     .bss                                     0x20000000   Section       96  libspace.o(.bss)
     HEAP                                     0x20000060   Section      512  startup_stm32f10x_hd.o(HEAP)
     Heap_Mem                                 0x20000060   Data         512  startup_stm32f10x_hd.o(HEAP)
@@ -1066,14 +1066,14 @@ Image Symbol Table
     PendSV_Handler                           0x0800049f   Thumb Code     2  stm32f10x_it.o(i.PendSV_Handler)
     RCC_APB2PeriphClockCmd                   0x080004a1   Thumb Code    26  stm32f10x_rcc.o(i.RCC_APB2PeriphClockCmd)
     SSD1306_Command                          0x080004c1   Thumb Code    44  ssd1306.o(i.SSD1306_Command)
-    SSD1306_Init                             0x080004ed   Thumb Code   146  ssd1306.o(i.SSD1306_Init)
-    SVC_Handler                              0x0800057f   Thumb Code     2  stm32f10x_it.o(i.SVC_Handler)
-    SysTick_Handler                          0x08000669   Thumb Code     2  stm32f10x_it.o(i.SysTick_Handler)
-    SystemInit                               0x0800066d   Thumb Code    78  system_stm32f10x.o(i.SystemInit)
-    UsageFault_Handler                       0x080006cd   Thumb Code     4  stm32f10x_it.o(i.UsageFault_Handler)
-    main                                     0x080006d1   Thumb Code    10  main.o(i.main)
-    Region$$Table$$Base                      0x080006dc   Number         0  anon$$obj.o(Region$$Table)
-    Region$$Table$$Limit                     0x080006ec   Number         0  anon$$obj.o(Region$$Table)
+    SSD1306_Init                             0x080004ed   Thumb Code    14  ssd1306.o(i.SSD1306_Init)
+    SVC_Handler                              0x080004fb   Thumb Code     2  stm32f10x_it.o(i.SVC_Handler)
+    SysTick_Handler                          0x080005e5   Thumb Code     2  stm32f10x_it.o(i.SysTick_Handler)
+    SystemInit                               0x080005e9   Thumb Code    78  system_stm32f10x.o(i.SystemInit)
+    UsageFault_Handler                       0x08000649   Thumb Code     4  stm32f10x_it.o(i.UsageFault_Handler)
+    main                                     0x0800064d   Thumb Code    10  main.o(i.main)
+    Region$$Table$$Base                      0x08000658   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x08000668   Number         0  anon$$obj.o(Region$$Table)
     __libspace_start                         0x20000000   Data          96  libspace.o(.bss)
     __temporary_stack_top$libspace           0x20000060   Data           0  libspace.o(.bss)
 
@@ -1085,9 +1085,9 @@ Memory Map of the image
 
   Image Entry point : 0x08000131
 
-  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x000006ec, Max: 0x00040000, ABSOLUTE)
+  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x00000668, Max: 0x00040000, ABSOLUTE)
 
-    Execution Region ER_IROM1 (Base: 0x08000000, Size: 0x000006ec, Max: 0x00040000, ABSOLUTE)
+    Execution Region ER_IROM1 (Base: 0x08000000, Size: 0x00000668, Max: 0x00040000, ABSOLUTE)
 
     Base Addr    Size         Type   Attr      Idx    E Section Name        Object
 
@@ -1163,17 +1163,17 @@ Memory Map of the image
     0x0800049e   0x00000002   Code   RO         3102    i.PendSV_Handler    stm32f10x_it.o
     0x080004a0   0x00000020   Code   RO         1669    i.RCC_APB2PeriphClockCmd  stm32f10x_rcc.o
     0x080004c0   0x0000002c   Code   RO         3342    i.SSD1306_Command   ssd1306.o
-    0x080004ec   0x00000092   Code   RO         3344    i.SSD1306_Init      ssd1306.o
-    0x0800057e   0x00000002   Code   RO         3103    i.SVC_Handler       stm32f10x_it.o
-    0x08000580   0x00000008   Code   RO         3160    i.SetSysClock       system_stm32f10x.o
-    0x08000588   0x000000e0   Code   RO         3161    i.SetSysClockTo72   system_stm32f10x.o
-    0x08000668   0x00000002   Code   RO         3104    i.SysTick_Handler   stm32f10x_it.o
-    0x0800066a   0x00000002   PAD
-    0x0800066c   0x00000060   Code   RO         3163    i.SystemInit        system_stm32f10x.o
-    0x080006cc   0x00000004   Code   RO         3105    i.UsageFault_Handler  stm32f10x_it.o
-    0x080006d0   0x0000000a   Code   RO         3067    i.main              main.o
-    0x080006da   0x00000002   PAD
-    0x080006dc   0x00000010   Data   RO         3525    Region$$Table       anon$$obj.o
+    0x080004ec   0x0000000e   Code   RO         3344    i.SSD1306_Init      ssd1306.o
+    0x080004fa   0x00000002   Code   RO         3103    i.SVC_Handler       stm32f10x_it.o
+    0x080004fc   0x00000008   Code   RO         3160    i.SetSysClock       system_stm32f10x.o
+    0x08000504   0x000000e0   Code   RO         3161    i.SetSysClockTo72   system_stm32f10x.o
+    0x080005e4   0x00000002   Code   RO         3104    i.SysTick_Handler   stm32f10x_it.o
+    0x080005e6   0x00000002   PAD
+    0x080005e8   0x00000060   Code   RO         3163    i.SystemInit        system_stm32f10x.o
+    0x08000648   0x00000004   Code   RO         3105    i.UsageFault_Handler  stm32f10x_it.o
+    0x0800064c   0x0000000a   Code   RO         3067    i.main              main.o
+    0x08000656   0x00000002   PAD
+    0x08000658   0x00000010   Data   RO         3525    Region$$Table       anon$$obj.o
 
 
     Execution Region RW_IRAM1 (Base: 0x20000000, Size: 0x00000660, Max: 0x0000c000, ABSOLUTE)
@@ -1193,18 +1193,18 @@ Image component sizes
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Object Name
 
          0          0          0          0          0       4532   core_cm3.o
-       260         20          0          0          0       2445   i2c.o
+       260         20          0          0          0       2449   i2c.o
         10          0          0          0          0        467   main.o
          0          0          0          0          0     213136   misc.o
-       190          0          0          0          0       1101   ssd1306.o
-        64         26        304          0       1536        824   startup_stm32f10x_hd.o
-       286          0          0          0          0       3028   stm32f10x_gpio.o
-        26          0          0          0          0       4062   stm32f10x_it.o
-        32          6          0          0          0        573   stm32f10x_rcc.o
+        58          0          0          0          0       1017   ssd1306.o
+        64         26        304          0       1536        828   startup_stm32f10x_hd.o
+       286          0          0          0          0       3032   stm32f10x_gpio.o
+        26          0          0          0          0       4070   stm32f10x_it.o
+        32          6          0          0          0        577   stm32f10x_rcc.o
        328         28          0          0          0       2013   system_stm32f10x.o
 
     ----------------------------------------------------------------------
-      1202         80        320          0       1536     232181   Object Totals
+      1070         80        320          0       1536     232121   Object Totals
          0          0         16          0          0          0   (incl. Generated)
          6          0          0          0          0          0   (incl. Padding)
 
@@ -1252,15 +1252,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-      1452         96        320          0       1632     231445   Grand Totals
-      1452         96        320          0       1632     231445   ELF Image Totals
-      1452         96        320          0          0          0   ROM Totals
+      1320         96        320          0       1632     231385   Grand Totals
+      1320         96        320          0       1632     231385   ELF Image Totals
+      1320         96        320          0          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)                 1772 (   1.73kB)
+    Total RO  Size (Code + RO Data)                 1640 (   1.60kB)
     Total RW  Size (RW Data + ZI Data)              1632 (   1.59kB)
-    Total ROM Size (Code + RO Data + RW Data)       1772 (   1.73kB)
+    Total ROM Size (Code + RO Data + RW Data)       1640 (   1.60kB)
 
 ==============================================================================
 

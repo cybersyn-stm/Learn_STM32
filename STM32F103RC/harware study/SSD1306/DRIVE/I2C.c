@@ -27,7 +27,7 @@ void I2C_STOP()
 void I2C_ACK(void)
 {
 	I2C_SCL0;
-	I2C_SDA0;
+	I2C_SDA1;
 	I2C_SCL1;
 	I2C_SCL0;
 }

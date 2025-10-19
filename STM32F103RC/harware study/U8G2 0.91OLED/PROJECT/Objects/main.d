@@ -36,3 +36,4 @@
 .\objects\main.o: ..\DRIVE\RCC.h
 .\objects\main.o: ..\DRIVE\GPIO.h
 .\objects\main.o: ..\DRIVE\USART.h
+.\objects\main.o: ..\DRIVE\bmp.h
