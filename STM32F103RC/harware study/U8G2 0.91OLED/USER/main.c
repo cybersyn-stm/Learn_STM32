@@ -66,10 +66,9 @@ void u8g2_loop()
     uint8_t i;
     for (i = 0; i < 64; i++)
     {
-        u8g2_ClearBuffer(&u8g2);
         u8g2_DrawStr(&u8g2, 0, i,"Hello,world!");
-        u8g2_DrawStr(&u8g2, 0, i+10,"I Hate world.");
         u8g2_SendBuffer(&u8g2);
+        u8g2_ClearDisplay(&u8g2)
     }
 }
 int main()
