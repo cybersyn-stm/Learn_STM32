@@ -34,7 +34,8 @@
             "*.c++": "cpp",
             "*.cpp": "cpp",
             "*.cxx": "cpp",
-            "*.cc": "cpp"
+            "*.cc": "cpp",
+            "u8g2_user": "c"
         },
         "[yaml]": {
             "editor.insertSpaces": true,

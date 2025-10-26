@@ -37,3 +37,4 @@
 .\objects\main.o: ..\DRIVE\GPIO.h
 .\objects\main.o: ..\DRIVE\USART.h
 .\objects\main.o: ..\DRIVE\bmp.h
+.\objects\main.o: ..\DRIVE\u8g2_user.h

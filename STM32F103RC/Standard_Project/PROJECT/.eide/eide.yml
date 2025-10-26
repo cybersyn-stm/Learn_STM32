@@ -62,6 +62,7 @@ targets:
         - USE_STDPERIPH_DRIVER
         - STM32F10X_HD
       incList:
+        - .
         - ../CMSIS
         - ../USER
         - ../FWLIB/inc

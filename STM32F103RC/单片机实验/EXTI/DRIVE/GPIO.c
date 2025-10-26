@@ -1,0 +1,21 @@
+#include "GPIO.h"
+void GPIO_clock_init(void)
+{
+	RCC->APB2ENR |= 1<<4;//OPEN GPIOC CLOCK
+	RCC->APB2ENR |= 1<<2;//OPEN GPIOA CLOCK
+	RCC->APB2ENR |= 1<<0;//OPEN AFIO CLOCK
+}
+void GPIO_init(void)
+{
+	GPIO_clock_init();
+	GPIOC->CRL &= 0xFFFF00FF;
+	GPIOC->CRL |= 0x00001100;//PC2 PC3 OUT PUT/UP
+	
+	GPIOC->CRH &= 0xFFF0FFFF;
+	GPIOC->CRH |= 0x00080000;//PC13 IN
+	GPIOC->ODR |= ~(1<<13);//PC13 UP
+	
+	GPIOA->CRL &= 0xFFFFFFF0;
+	GPIOA->CRL |= 0x00000008;//PA0 IN
+	GPIOA->ODR |= ~(1<<0);//PA0 UP
+}

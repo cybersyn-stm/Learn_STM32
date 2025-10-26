@@ -30,6 +30,7 @@
 ".\objects\gpio.o"
 ".\objects\rcc.o"
 ".\objects\usart.o"
+".\objects\u8g2_user.o"
 ".\objects\mui.o"
 ".\objects\mui_u8g2.o"
 ".\objects\u8g2_arc.o"
