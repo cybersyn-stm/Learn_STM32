@@ -1,0 +1,30 @@
+{
+    "folders": [
+        {
+            "path": "."
+        },
+        {
+            "path": "../CMSIS"
+        },
+        {
+            "path": "../DRIVE"
+        },
+        {
+            "path": "../FWLIB"
+        },
+        {
+            "path": "../OUTPUT"
+        },
+        {
+            "path": "../STARTUP"
+        },
+        {
+            "path": "../u8g2"
+        },
+        {
+            "path": "../USER"
+        }
+    ],
+    "settings": {},
+    "extensions": {}
+}

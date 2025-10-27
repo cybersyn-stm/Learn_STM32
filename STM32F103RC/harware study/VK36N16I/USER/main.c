@@ -8,23 +8,18 @@
 #include "TM1650.h"
 uint8_t key;
 uint16_t i;
+I2C_T i2c;
 int main()
 {
 	GPIO_init();
 	RCC_init();
 	USART1_init();
-	VK36N16I_init();
+	VK36N16I_init(&i2c);
 	TM1650_init();
 	while(1)
 	{
-		key = Key_Scan();
+		key = Key_Scan(&i2c);
 		USART1_SendChar(key);
-	
-		for(i = 0;i< 9999;i++)
-		{
-			Systick_ms(100);
-			TM1650_Dislay(i);
-		}
 	}
 }	
 

@@ -2,40 +2,32 @@
 #define __I2C_H_
 
 #include "stm32f10x.h"
-#include "RCC.h"
-#include "USART.h"
+#include <stdint.h>
 
-#define I2C_SDA_GPIO GPIOC //SDA PC11 
-#define I2C_SCL_GPIO GPIOC//SCL PC12
-#define I2C_SDA_Pin GPIO_Pin_11
-#define I2C_SCL_Pin GPIO_Pin_12
-//SDA CTRL
-#define I2C_SDA1 GPIO_SetBits(I2C_SDA_GPIO,I2C_SDA_Pin);Systick_us(100);
-#define I2C_SDA0 GPIO_ResetBits(I2C_SDA_GPIO,I2C_SDA_Pin);Systick_us(100);
+#define I2C_PIN_LOW  0
+#define I2C_PIN_HIGH 1
 
-#define I2C_SCL1 GPIO_SetBits(I2C_SCL_GPIO,I2C_SCL_Pin);Systick_us(100);
-#define I2C_SCL0 GPIO_ResetBits(I2C_SCL_GPIO,I2C_SCL_Pin);Systick_us(100);
+typedef void (*I2C_SETTING_INIT_CALLBACK_T)(void);
+typedef void (*I2C_PIN_WRITE_CALLBACK_T)(uint8_t level);
+typedef uint8_t (*I2C_PIN_READ_CALLBACK_T)(void);
+typedef void (*I2C_DELAY_US_CALLBACK_T)(uint32_t us);
 
-#define I2C_ReadSDA GPIO_ReadInputDataBit(I2C_SDA_GPIO,I2C_SDA_Pin)
+typedef struct {
+    I2C_SETTING_INIT_CALLBACK_T I2C_SETTING_INIT;
+    I2C_PIN_READ_CALLBACK_T SDA_READ;
+    I2C_PIN_WRITE_CALLBACK_T SDA_WRITE;
+    I2C_PIN_WRITE_CALLBACK_T SCL_WRITE;
+    I2C_DELAY_US_CALLBACK_T DELAY_US;
+} I2C_T;
+/* 基本 I2C 操作，均通过回调实现 */
+void I2C_START(I2C_T *i2c);
+void I2C_STOP(I2C_T *i2c);
+void I2C_ACK(I2C_T *i2c);
+void I2C_WRITE_BYTE(I2C_T *i2c, uint8_t data);
+uint8_t I2C_READ_BYTE(I2C_T *i2c);
 
-
-void I2C_GPIO_Init(void);
-
-void I2C_WriteByte(uint8_t data);
-uint8_t I2C_ReadByte(void);
-void I2C_STOP(void);
-void I2C_START(void);
-void I2C_ACK(void);
-void I2C_Write(uint8_t device_address,uint8_t address,uint8_t data);
-
-
-
-
-
-
-
-
-
+/* 方便的发送函数（写寄存器） */
+void I2C_SEND(I2C_T *i2c, uint8_t device_address, uint8_t reg, uint8_t data);
 
 #endif
 
