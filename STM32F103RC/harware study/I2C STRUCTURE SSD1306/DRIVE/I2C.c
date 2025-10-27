@@ -51,7 +51,7 @@ uint8_t I2C_READ_BYTE(I2C_T *i2c_t)
 		{
 			redata |= 0x01;
 		}
-		i2c_t->SCL_WRITE(I2C_PIN_LOW);//SCL0
+		i2c_t->SCL_WRITE(I2C_PIN_HIGH);//SCL0
 	}
 	i2c_t->SCL_WRITE(I2C_PIN_LOW);
 	return redata;

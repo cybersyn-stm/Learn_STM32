@@ -1,0 +1,22 @@
+#include "USART.h"
+void USART1_init(void)
+{
+	USART1->BRR = ((72000000/(4800*16))<<4);
+	USART1->CR1 &= ~(1<<12);
+	USART1->CR2 &= ~USART_CR2_STOP;
+	USART1->CR1 &= ~(1<<10);
+	USART1->CR1 |= 1<<5;
+	USART1->CR1 |= USART_CR1_TE|USART_CR1_RE;
+	USART1->CR1 |= USART_CR1_UE;
+	
+	
+	SCB->AIRCR |= 0X5FA070;//0101 0BIT/4BIT
+	NVIC->ISER[1] |= 1<<5;//USAR1_IRQn ENABLE
+	
+}
+void USART1_SendChar(uint8_t data)
+{
+	while(!(USART1->SR & USART_SR_TXE));
+	USART1->DR = data;
+	while(!(USART1->SR & USART_SR_TC));
+}

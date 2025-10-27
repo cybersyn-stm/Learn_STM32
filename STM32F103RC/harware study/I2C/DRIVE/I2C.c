@@ -81,7 +81,7 @@ void I2C_Write(uint8_t device_address,uint8_t address,uint8_t data)
 	I2C_WriteByte(data);
 	I2C_ReadACK();
 	I2C_WriteByte(data);
-	I2C_ReadNACK();
+	I2C_ReadACK();
 	I2C_STOP();
 }
 
