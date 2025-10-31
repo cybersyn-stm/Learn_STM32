@@ -29,5 +29,3 @@
 .\objects\i2c.o: ..\FWLIB\inc\stm32f10x_usart.h
 .\objects\i2c.o: ..\FWLIB\inc\stm32f10x_wwdg.h
 .\objects\i2c.o: ..\FWLIB\inc\misc.h
-.\objects\i2c.o: ..\DRIVE\RCC.h
-.\objects\i2c.o: ..\DRIVE\USART.h

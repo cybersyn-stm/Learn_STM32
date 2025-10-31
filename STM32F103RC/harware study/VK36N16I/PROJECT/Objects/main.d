@@ -31,7 +31,7 @@
 .\objects\main.o: ..\DRIVE\GPIO.h
 .\objects\main.o: ..\DRIVE\RCC.h
 .\objects\main.o: ..\DRIVE\I2C.h
-.\objects\main.o: ..\DRIVE\USART.h
 .\objects\main.o: ..\DRIVE\TIM.h
+.\objects\main.o: ..\DRIVE\USART.h
 .\objects\main.o: ..\DRIVE\VK36N16I.h
 .\objects\main.o: ..\DRIVE\TM1650.h

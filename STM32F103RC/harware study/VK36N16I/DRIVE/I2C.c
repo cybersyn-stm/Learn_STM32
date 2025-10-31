@@ -67,7 +67,7 @@ void I2C_SEND(I2C_T *i2c, uint8_t device_address, uint8_t reg, uint8_t data)
     I2C_WRITE_BYTE(i2c, reg);
     I2C_ACK(i2c);
     I2C_WRITE_BYTE(i2c, data);
-    I2C_ACK(i2c);
+
     I2C_STOP(i2c);
 }
 

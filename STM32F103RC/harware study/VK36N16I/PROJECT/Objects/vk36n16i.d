@@ -31,4 +31,3 @@
 .\objects\vk36n16i.o: ..\FWLIB\inc\stm32f10x_wwdg.h
 .\objects\vk36n16i.o: ..\FWLIB\inc\misc.h
 .\objects\vk36n16i.o: ..\DRIVE\RCC.h
-.\objects\vk36n16i.o: ..\DRIVE\USART.h

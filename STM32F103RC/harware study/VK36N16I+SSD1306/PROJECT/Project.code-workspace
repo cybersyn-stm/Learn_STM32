@@ -1,0 +1,18 @@
+{
+    "folders": [
+        {
+            "path": "."
+        }
+    ],
+    "settings": {
+        "files.associations": {
+            "u8g2_user.h": "c",
+            "vk36n16i.h": "c",
+            "i2c.h": "c",
+            "adc.h": "c",
+            "tim.h": "c",
+            "stm32f10x.h": "c"
+        }
+    },
+    "extensions": {}
+}
