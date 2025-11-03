@@ -54,7 +54,7 @@ uint8_t u8x8_byte_hw_i2c(u8x8_t *u8x8, uint8_t msg, uint8_t arg_int, void *arg_p
                 .I2C_OwnAddress1 = 0x10,
                 .I2C_Ack = I2C_Ack_Enable,
                 .I2C_AcknowledgedAddress = I2C_AcknowledgedAddress_7bit,
-                .I2C_ClockSpeed = 400000
+                .I2C_ClockSpeed = 100000
             };
             I2C_Init(I2C1, &I2C_InitStructure);
             I2C_Cmd(I2C1, ENABLE); 

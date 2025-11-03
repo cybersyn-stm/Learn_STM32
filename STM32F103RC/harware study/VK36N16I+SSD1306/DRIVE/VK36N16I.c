@@ -14,18 +14,18 @@ static void i2c_sda_write_cb(uint8_t level)
 {
     if (level == I2C_PIN_HIGH) GPIOC->ODR |= 1<<11; //GPIO_SetBits(GPIOC, GPIO_Pin_11);
     else GPIOC->ODR &= ~(1<<11); //GPIO_ResetBits(GPIOC, GPIO_Pin_11);
-	Systick_us(1);
+	Systick_us(5);
 }
 static uint8_t i2c_sda_read_cb(void)
 {
-	Systick_us(1);
+	Systick_us(5);
     return GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_11);
 }
 static void i2c_scl_write_cb(uint8_t level)
 {
     if (level == I2C_PIN_HIGH) GPIOC->ODR |= 1<<12; //GPIO_SetBits(GPIOC, GPIO_Pin_12);
     else GPIOC->ODR &= ~(1<<12); //GPIO_ResetBits(GPIOC, GPIO_Pin_12);
-	Systick_us(1);
+	Systick_us(5);
 }
 static void i2c_delay_us_cb(uint32_t us)
 {

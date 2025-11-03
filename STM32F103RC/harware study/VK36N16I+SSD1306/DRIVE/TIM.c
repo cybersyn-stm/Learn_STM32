@@ -35,7 +35,7 @@ void TIM_rcc_gpio_init(void)
 
     //TIM 3
     TIM_TimeBaseInitTypeDef TIM3_Base_InitStruct;
-    TIM3_Base_InitStruct.TIM_Period        = 10000 - 1; // ARR = 999
+    TIM3_Base_InitStruct.TIM_Period        = 65536 - 1; // ARR = 999
     TIM3_Base_InitStruct.TIM_Prescaler     = 72 - 1;
     TIM3_Base_InitStruct.TIM_ClockDivision = TIM_CKD_DIV1;
     TIM3_Base_InitStruct.TIM_CounterMode   = TIM_CounterMode_Up;            
