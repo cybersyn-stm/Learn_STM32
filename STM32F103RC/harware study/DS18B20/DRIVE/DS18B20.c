@@ -16,11 +16,13 @@ void DS18B20_Write(uint8_t data)
 {
 	if(data == 1)
 	{
-		GPIO_SetBits(GPIOC,GPIO_Pin_5);
+		//GPIO_SetBits(GPIOC,GPIO_Pin_5);
+		GPIOC->ODR |= 1<<5;
 	}
 	if(data == 0)
 	{
-		GPIO_ResetBits(GPIOC,GPIO_Pin_5);
+		//GPIO_ResetBits(GPIOC,GPIO_Pin_5);
+		GPIOC->ODR &= ~(1<<5);
 	}
 }
 void DS18B20_init()
@@ -62,7 +64,7 @@ uint8_t DS18B20_Read_Bit(void)
 	DS18B20_Write(0);
 	Systick_us(10);
 	DS18B20_Write(1);
-	if(GPIO_ReadInputDataBit(GPIOC,GPIO_Pin_5)==SET)
+	if(GPIOC->IDR & (1<<5))
 	{
 		data = 1;
 	}
@@ -89,7 +91,7 @@ uint8_t DS18B20_ACK(void)
 	uint8_t time = 0;
 	
 	DS18B20_Mode(1);
-	while(GPIO_ReadInputDataBit(GPIOC,GPIO_Pin_5)&& time<100)
+	while((GPIOC->IDR & (1<<5)) && time<100)
 	{
 		time++;
 		Systick_us(1);
@@ -110,7 +112,7 @@ uint8_t DS18B20_Read_Data(void)
 		DS18B20_Write(0);
 		Systick_us(5);
 		DS18B20_Write(1);
-		if(GPIO_ReadInputDataBit(GPIOC,GPIO_Pin_5) == SET)
+		if(GPIOC->IDR & (1<<5))
 		{
 			data |= 0x80;
 			data = data>>1;
@@ -129,13 +131,10 @@ uint16_t DS18B20_ReadTemp(void)
 	uint8_t temp_high,temp_low;
 	DS18B20_init();
 	DS18B20_ACK();
-	Systick_us(240);
 	DS18B20_Write_Data(0xcc);
 	DS18B20_Write_Data(0x44);
-	Systick_ms(750);
 	DS18B20_init();
 	DS18B20_ACK();
-	Systick_us(240);
 	DS18B20_Write_Data(0xcc);
 	DS18B20_Write_Data(0xbe);
 	
