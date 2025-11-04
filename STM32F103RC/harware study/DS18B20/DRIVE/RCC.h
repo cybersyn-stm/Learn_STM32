@@ -4,7 +4,7 @@
 void RCC_init(void);
 
 void Systick_us(unsigned int time);
-void SysTick_ms(unsigned int time);
+void Systick_ms(unsigned int time);
 #endif
 
 

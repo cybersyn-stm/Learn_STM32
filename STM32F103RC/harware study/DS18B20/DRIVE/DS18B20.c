@@ -1,26 +1,26 @@
 #include "DS18B20.h"
 void DS18B20_Mode(uint8_t mode)
 {
-	GPIOA->CRL &= 0xfffffff0;
+	GPIOC->CRL &= 0xff0fffff;
 	if(mode == 0)
 	{
-		GPIOA->CRL |= 0x00000003;//PA0 PP OUT
-		GPIOA->ODR |= 1<<0;
+		GPIOC->CRL |= 0x00300000;//PC5 PP OUT
+		GPIOC->ODR |= 1<<5;
 	}
 	if(mode == 1)
 	{
-		GPIOA->CRL |= 0x00000008;//PA PUT/UP IN 
+		GPIOC->CRL |= 0x00800000;//PC4 PUT/UP IN
 	}
 }
 void DS18B20_Write(uint8_t data)
 {
 	if(data == 1)
 	{
-		GPIO_SetBits(GPIOA,GPIO_Pin_0);
+		GPIO_SetBits(GPIOC,GPIO_Pin_5);
 	}
 	if(data == 0)
 	{
-		GPIO_ResetBits(GPIOA,GPIO_Pin_0);
+		GPIO_ResetBits(GPIOC,GPIO_Pin_5);
 	}
 }
 void DS18B20_init()
@@ -62,7 +62,7 @@ uint8_t DS18B20_Read_Bit(void)
 	DS18B20_Write(0);
 	Systick_us(10);
 	DS18B20_Write(1);
-	if(GPIO_ReadInputDataBit(GPIOA,GPIO_Pin_0)==SET)
+	if(GPIO_ReadInputDataBit(GPIOC,GPIO_Pin_5)==SET)
 	{
 		data = 1;
 	}
@@ -89,16 +89,17 @@ uint8_t DS18B20_ACK(void)
 	uint8_t time = 0;
 	
 	DS18B20_Mode(1);
-	while(GPIO_ReadInputDataBit(GPIOA,GPIO_Pin_0)&& time<100)
+	while(GPIO_ReadInputDataBit(GPIOC,GPIO_Pin_5)&& time<100)
 	{
 		time++;
 		Systick_us(1);
 	}
-	while(!GPIO_ReadInputDataBit(GPIOA,GPIO_Pin_0))
+	while(!GPIO_ReadInputDataBit(GPIOC,GPIO_Pin_5))
 	{
 		time++;
 		Systick_us(1);
 	}
+	return 0;
 }
 uint8_t DS18B20_Read_Data(void)
 {
@@ -109,7 +110,7 @@ uint8_t DS18B20_Read_Data(void)
 		DS18B20_Write(0);
 		Systick_us(5);
 		DS18B20_Write(1);
-		if(GPIO_ReadInputDataBit(GPIOA,GPIO_Pin_0) == SET)
+		if(GPIO_ReadInputDataBit(GPIOC,GPIO_Pin_5) == SET)
 		{
 			data |= 0x80;
 			data = data>>1;
@@ -131,7 +132,7 @@ uint16_t DS18B20_ReadTemp(void)
 	Systick_us(240);
 	DS18B20_Write_Data(0xcc);
 	DS18B20_Write_Data(0x44);
-	SysTick_ms(750);
+	Systick_ms(750);
 	DS18B20_init();
 	DS18B20_ACK();
 	Systick_us(240);
@@ -141,7 +142,5 @@ uint16_t DS18B20_ReadTemp(void)
 	temp_low = DS18B20_Read_Data();
 	temp_high = DS18B20_Read_Data();
 	
-	USART1_SendChar(temp_low);
-	USART1_SendChar(temp_high);
-	return 0;
+	return ((temp_high<<8)|temp_low)*0.0625*100;
 }

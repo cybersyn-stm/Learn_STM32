@@ -19,7 +19,7 @@ void Systick_us(unsigned int time)
 	SysTick->CTRL &= ~SysTick_CTRL_ENABLE_Msk;
 	SysTick->VAL |= 0X00;
 }
-void SysTick_ms(unsigned int time)
+void Systick_ms(unsigned int time)
 {
 	for(;time>0;time--)
 	{

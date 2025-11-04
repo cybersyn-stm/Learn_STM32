@@ -75,7 +75,6 @@ virtualFolder:
         - path: ../U8G2/u8g2_d_memory.c
         - path: ../U8G2/u8g2_d_setup.c
         - path: ../U8G2/u8g2_font.c
-        - path: ../U8G2/u8g2_fonts.c
         - path: ../U8G2/u8g2_hvline.c
         - path: ../U8G2/u8g2_input_value.c
         - path: ../U8G2/u8g2_intersection.c
@@ -105,6 +104,7 @@ virtualFolder:
         - path: ../U8G2/u8x8_string.c
         - path: ../U8G2/u8x8_u8toa.c
         - path: ../U8G2/u8x8_u16toa.c
+        - path: ../U8G2/u8x8_fonts.c
       folders: []
 dependenceList: []
 outDir: build
@@ -168,7 +168,7 @@ targets:
       - <virtual_root>/U8G2/u8x8_d_ssd1306_72x40.c
       - <virtual_root>/U8G2/u8x8_d_ssd1306_96x16.c
       - <virtual_root>/U8G2/u8x8_d_ssd1306_96x40.c
-      - <virtual_root>/U8G2/u8x8_fonts.c
+      - <virtual_root>/U8G2/u8g2_fonts.c
     toolchain: AC5
     toolchainConfigMap:
       AC5:

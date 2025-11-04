@@ -2,6 +2,7 @@
 void GPIO_clock_init(void)
 {
 	RCC->APB2ENR |= 1<<2;//OPEN GPIOA
+	RCC->APB2ENR |= 1<<4;//OPEN GPIOC
 	RCC->APB2ENR |= 1<<14;//OPEN USTART1
 }
 void GPIO_init(void)

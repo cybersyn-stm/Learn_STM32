@@ -29,21 +29,22 @@ int main()
     while(1)    
     {
         PWM_Setting(pwm_duty);
-        for (i = 0,ADC_Value_Sum = 0; i < 256; i++)
+        for (i = 0,ADC_Value_Sum = 0; i < 625; i++)
         {
             ADC_Value_Sum += ADC1_getChannelValue(ADC_Channel_0);
         }
-        ADC_Value = (ADC_Value_Sum / 256);
+        ADC_Value = (ADC_Value_Sum / 625);
         uint32_t mv = (uint32_t)ADC_Value * 3300 / 4095;
-        if (key_flag == 4)
+        if (key_flag == 1)
         {
             key_flag = 0;
-            // 停止 TIM3，避免扫描期间被再次触发
-            TIM3->CR1 &= ~TIM_CR1_CEN;    // 停止计数
-            TIM3->SR &= ~TIM_SR_UIF;      // 清除更新中断标志
+            // Stop TIM3
+            TIM3->CR1 &= ~TIM_CR1_CEN;    // Stop adding
+            TIM3->SR &= ~TIM_SR_UIF;      // Clear update interrupt flag
 
             key = Key_Scan(&i2c);
-            if (key != 255 && key < 10)
+            USART1_SendChar(key);
+            if (key != 255 && key < 10 && key != last_key)
             {
                 if (key_input_index < 3)
                 {
@@ -60,7 +61,13 @@ int main()
                         default:
                             break;
                     }
+                    last_key = key;
             }
+            if (key == 255)
+            {
+                last_key = 255;
+            }
+            
             if (key == 10)//Enter number
             {
                 strcpy(key_set,"Setting...");
@@ -104,7 +111,7 @@ void TIM3_IRQHandler()
 {
     if(TIM3->SR&(1<<0))
     {
-        key_flag++;
+        key_flag = 1;
         u8g2_flag = 1;
         TIM3->SR &= ~(1<<0);
         if (key_clean_flag == 1)
@@ -117,7 +124,5 @@ void TIM3_IRQHandler()
                 key_clean_flag_add = 0;
             }
         }
-      
-        
     }
 }
