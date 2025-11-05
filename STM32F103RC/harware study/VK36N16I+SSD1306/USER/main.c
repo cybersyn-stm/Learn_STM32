@@ -21,7 +21,7 @@ int main()
     RCC_init();
     USART1_init();
     TIM_rcc_gpio_init();
-    u8g2_init(&u8g2,0);//harware i2c
+    u8g2_init(&u8g2,1);//harware i2c
     VK36N16I_init(&i2c);
     ADC1_init();
     PWM_Setting(0);
