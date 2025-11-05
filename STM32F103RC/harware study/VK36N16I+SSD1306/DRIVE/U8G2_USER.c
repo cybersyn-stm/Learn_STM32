@@ -1,23 +1,4 @@
 #include "u8g2_user.h"
-#include "stm32f10x_dma.h"
-void I2C1_DMA_Config(uint8_t *data, uint16_t size)
-{
-    DMA_InitTypeDef DMA_InitStructure;
-
-    DMA_DeInit(DMA1_Channel6);
-    DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t)&I2C1->DR;
-    DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t)data;
-    DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralDST;
-    DMA_InitStructure.DMA_BufferSize = size;
-    DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
-    DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;
-    DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_Byte;
-    DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_Byte;
-    DMA_InitStructure.DMA_Mode = DMA_Mode_Normal;
-    DMA_InitStructure.DMA_Priority = DMA_Priority_VeryHigh;
-    DMA_InitStructure.DMA_M2M = DMA_M2M_Disable;
-    DMA_Init(DMA1_Channel6, &DMA_InitStructure);
-}
 uint8_t u8x8_gpio_and_delay(u8x8_t *u8x8, uint8_t msg, uint8_t arg_int, void *arg_ptr) {
     switch (msg) {
         case U8X8_MSG_DELAY_100NANO: // delay arg_int * 100 nano seconds
@@ -57,42 +38,26 @@ uint8_t u8x8_byte_hw_i2c(u8x8_t *u8x8, uint8_t msg, uint8_t arg_int, void *arg_p
     uint8_t* data = (uint8_t*) arg_ptr;
     switch(msg) {
         case U8X8_MSG_BYTE_SEND:
-            if (arg_int == 0) {
-                break;
-            }
-            I2C1_DMA_Config(data, arg_int);
-            DMA_ClearFlag(DMA1_FLAG_GL6 | DMA1_FLAG_TC6 | DMA1_FLAG_TE6 | DMA1_FLAG_HT6);
-            I2C_DMACmd(I2C1, ENABLE);
-            DMA_Cmd(DMA1_Channel6, ENABLE);
-            while (!DMA_GetFlagStatus(DMA1_FLAG_TC6)) {
-                continue;
-            }
-            DMA_ClearFlag(DMA1_FLAG_GL6 | DMA1_FLAG_TC6);
-            DMA_Cmd(DMA1_Channel6, DISABLE);
-            I2C_DMACmd(I2C1, DISABLE);
-            while (!I2C_GetFlagStatus(I2C1, I2C_FLAG_TXE)) {
-                continue;
-            }
-            while (!I2C_GetFlagStatus(I2C1, I2C_FLAG_BTF)) {
-                continue;
+            while( arg_int-- > 0 ) {
+                I2C_SendData(I2C1, *data++);
+                while (!I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_BYTE_TRANSMITTED)) 
+                    continue;
             }
             break;
         case U8X8_MSG_BYTE_INIT:
         {
         /* add your custom code to init i2c subsystem */
             RCC_APB1PeriphClockCmd(RCC_APB1Periph_I2C1, ENABLE);
-            RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA1, ENABLE);
             I2C_InitTypeDef I2C_InitStructure = {
                 .I2C_Mode = I2C_Mode_I2C,
                 .I2C_DutyCycle = I2C_DutyCycle_2,
                 .I2C_OwnAddress1 = 0x10,
                 .I2C_Ack = I2C_Ack_Enable,
                 .I2C_AcknowledgedAddress = I2C_AcknowledgedAddress_7bit,
-                .I2C_ClockSpeed = 1090000
+                .I2C_ClockSpeed = 1000000
             };
             I2C_Init(I2C1, &I2C_InitStructure);
-            I2C_Cmd(I2C1, ENABLE);
-            I2C_DMACmd(I2C1, DISABLE);
+            I2C_Cmd(I2C1, ENABLE); 
         }
             break;
         case U8X8_MSG_BYTE_SET_DC:
