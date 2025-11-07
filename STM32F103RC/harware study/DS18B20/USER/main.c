@@ -71,15 +71,13 @@ int main(void)
     DS18B20_init();
     u8g2_init(&u8g2,1);
     u8g2_SetFont(&u8g2, u8g2_font_7x13_te);
-
     // 初始化 TIM2 为 1Hz，用来统计 FPS
     TIM2_1Hz_Init();
-
     while(1)
     {
             //temp = DS18B20_ReadTemp();
             u8g2_ClearBuffer(&u8g2);
-            sprintf(buf, "Temp:%d.%02dC FPS:%lu", temp / 100, temp % 100, (unsigned long)u8g2_fps);
+            sprintf(buf, "FPS:%lu",u8g2_fps);
             u8g2_DrawBox(&u8g2, i, 40, 10, 10);  // 绘制方块
             u8g2_DrawStr(&u8g2, 0, 10, buf);
             u8g2_SendBuffer(&u8g2);

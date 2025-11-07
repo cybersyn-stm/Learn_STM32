@@ -1,5 +1,4 @@
 #include "VK36N16I.h"
-#include "I2C.h"
 
 static void i2c_setting_init_cb(void)
 {

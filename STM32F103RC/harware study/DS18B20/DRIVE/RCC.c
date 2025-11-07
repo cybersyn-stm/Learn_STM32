@@ -25,6 +25,7 @@ void RCC_init(void)
         SystemCoreClockUpdate();
     }
 	SysTick->CTRL |= 1<<2;//SYSTICK USE HCLK
+    
 }
 void Systick_us(unsigned int time)
 {

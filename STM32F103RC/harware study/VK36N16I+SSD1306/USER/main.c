@@ -20,11 +20,11 @@ int main()
 {
     RCC_init();
     USART1_init();
-    TIM_rcc_gpio_init();
     u8g2_init(&u8g2,1);//harware i2c
     VK36N16I_init(&i2c);
     ADC1_init();
     PWM_Setting(0);
+    TIM_rcc_gpio_init();
     u8g2_SetFont(&u8g2,u8g2_font_7x13_te);
     while(1)    
     {
@@ -35,15 +35,12 @@ int main()
         }
         ADC_Value = (ADC_Value_Sum / 625);
         uint32_t mv = (uint32_t)ADC_Value * 3300 / 4095;
-        if (key_flag == 1)
+       if (key_flag == 1)
         {
             key_flag = 0;
             // Stop TIM3
             TIM3->CR1 &= ~TIM_CR1_CEN;    // Stop adding
             TIM3->SR &= ~TIM_SR_UIF;      // Clear update interrupt flag
-
-            key = Key_Scan(&i2c);
-            USART1_SendChar(key);
             if (key != 255 && key < 10 && key != last_key)
             {
                 if (key_input_index < 3)
@@ -95,9 +92,9 @@ int main()
         }
         if (u8g2_flag == 1)
         {
-            sprintf(ADC_buff,"ADC Setting: %lumV\n",mv);
-            sprintf(key_buff,"Key Value: %s\n",key_set);
-            sprintf(pwm_buff,"PWM Duty: %lu\n",pwm_duty);
+            sprintf(ADC_buff,"ADC Setting:%lumV\n",mv);
+            sprintf(key_buff,"Key Value:%s\n",key_set);
+            sprintf(pwm_buff,"PWM Duty:%lu\n",pwm_duty);
             u8g2_ClearBuffer(&u8g2);
             u8g2_DrawStr(&u8g2,0,10,key_buff);  
             u8g2_DrawStr(&u8g2,0,30,ADC_buff);
@@ -111,9 +108,10 @@ void TIM3_IRQHandler()
 {
     if(TIM3->SR&(1<<0))
     {
+        key = Key_Scan(&i2c);
         key_flag = 1;
         u8g2_flag = 1;
-        TIM3->SR &= ~(1<<0);
+
         if (key_clean_flag == 1)
         {
             key_clean_flag_add++;
@@ -123,6 +121,7 @@ void TIM3_IRQHandler()
                 key_clean_flag = 0;
                 key_clean_flag_add = 0;
             }
-        }
+        }       
+        TIM3->SR &= ~(1<<0);
     }
 }

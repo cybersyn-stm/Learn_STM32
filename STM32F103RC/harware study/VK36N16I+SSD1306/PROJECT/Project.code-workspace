@@ -11,7 +11,8 @@
             "i2c.h": "c",
             "adc.h": "c",
             "tim.h": "c",
-            "stm32f10x.h": "c"
+            "stm32f10x.h": "c",
+            "rcc.h": "c"
         }
     },
     "extensions": {}

@@ -1,7 +1,16 @@
 #include "u8g2_user.h"
+#include <string.h>
 
 static volatile uint8_t dma_transfer_complete = 0;
 static uint8_t g_i2c_hw_mode = 0; // 1=硬件I2C，0=软件I2C
+
+/* 新增：I2C DMA发送缓冲 */
+#define U8G2_I2C_DMA_BUF_MAX 8800
+static struct {
+    uint16_t len;
+    uint8_t  active;
+    uint8_t  buf[U8G2_I2C_DMA_BUF_MAX];
+} i2c_tx_ctx;
 
 uint8_t u8x8_gpio_and_delay(u8x8_t *u8x8, uint8_t msg, uint8_t arg_int, void *arg_ptr) {
     switch (msg) {
@@ -48,6 +57,16 @@ void DMA1_Channel6_IRQHandler(void)
     if (DMA_GetITStatus(DMA1_IT_TC6))
     {
         DMA_ClearITPendingBit(DMA1_IT_TC6);
+
+        /* DMA收尾并发送STOP（短轮询确保最后字节推出） */
+        DMA_Cmd(DMA1_Channel6, DISABLE);
+        I2C_DMACmd(I2C1, DISABLE);
+
+        uint32_t guard = 10000;
+        while (!I2C_GetFlagStatus(I2C1, I2C_FLAG_BTF) && --guard);
+        I2C_GenerateSTOP(I2C1, ENABLE);
+
+        i2c_tx_ctx.active = 0;
         dma_transfer_complete = 1;
     }
 }
@@ -88,35 +107,14 @@ uint8_t u8x8_byte_hw_i2c_dma(u8x8_t *u8x8, uint8_t msg, uint8_t arg_int, void *a
     uint8_t* data = (uint8_t*) arg_ptr;
     switch(msg) {
         case U8X8_MSG_BYTE_SEND:
-            if (arg_int > 0) {
-                // 关键：每次启动前清标志，避免TC残留导致中断不触发
-                DMA_Cmd(DMA1_Channel6, DISABLE);
-                DMA_ClearFlag(DMA1_FLAG_GL6 | DMA1_FLAG_TC6 | DMA1_FLAG_HT6 | DMA1_FLAG_TE6);
-
-                DMA1_Channel6->CMAR  = (uint32_t)data;
-                DMA1_Channel6->CNDTR = arg_int;
-
-                dma_transfer_complete = 0;
-
-                I2C_DMACmd(I2C1, ENABLE);
-                DMA_Cmd(DMA1_Channel6, ENABLE);
-
-                // 等待DMA完成（加超时防死锁，便于定位中断是否触发）
-                uint32_t timeout = 1000000;
-                while (!dma_transfer_complete && --timeout);
-                if (timeout == 0) {
-                    // 超时：关闭DMA，避免死锁
-                    DMA_Cmd(DMA1_Channel6, DISABLE);
-                    I2C_DMACmd(I2C1, DISABLE);
-                    return 0;
-                }
-
-                // 等待最后一个字节完成移出移位寄存器
-                timeout = 100000;
-                while (!I2C_GetFlagStatus(I2C1, I2C_FLAG_BTF) && --timeout);
-                // 可选：不依赖BTF，改为判断TxE即可
-                I2C_DMACmd(I2C1, DISABLE);
-            }
+        {
+            /* 精简：仅把数据收集到缓冲区 */
+            if (arg_int == 0) break;
+            uint16_t remain = U8G2_I2C_DMA_BUF_MAX - i2c_tx_ctx.len;
+            uint16_t n = (arg_int <= remain) ? arg_int : remain;
+            memcpy(&i2c_tx_ctx.buf[i2c_tx_ctx.len], data, n);
+            i2c_tx_ctx.len += n;
+        }
             break;
 
         case U8X8_MSG_BYTE_INIT:
@@ -128,11 +126,10 @@ uint8_t u8x8_byte_hw_i2c_dma(u8x8_t *u8x8, uint8_t msg, uint8_t arg_int, void *a
                 .I2C_OwnAddress1 = 0x10,
                 .I2C_Ack = I2C_Ack_Enable,
                 .I2C_AcknowledgedAddress = I2C_AcknowledgedAddress_7bit,
-                .I2C_ClockSpeed = 1090000 // 修正：F1仅支持最高400kHz
+                .I2C_ClockSpeed = 1000000 // F1最高1MHz
             };
             I2C_Init(I2C1, &I2C_InitStructure);
             I2C_Cmd(I2C1, ENABLE);
-
             I2C_DMA_Init();
         }
             break;
@@ -142,6 +139,10 @@ uint8_t u8x8_byte_hw_i2c_dma(u8x8_t *u8x8, uint8_t msg, uint8_t arg_int, void *a
 
         case U8X8_MSG_BYTE_START_TRANSFER:
             while (I2C_GetFlagStatus(I2C1, I2C_FLAG_BUSY));
+            i2c_tx_ctx.len = 0;
+            i2c_tx_ctx.active = 0;
+            dma_transfer_complete = 0;
+
             I2C_GenerateSTART(I2C1, ENABLE);
             while (!I2C_CheckEvent(I2C1, I2C_EVENT_MASTER_MODE_SELECT));
             I2C_Send7bitAddress(I2C1, 0x78, I2C_Direction_Transmitter); // 0x3C<<1
@@ -149,7 +150,20 @@ uint8_t u8x8_byte_hw_i2c_dma(u8x8_t *u8x8, uint8_t msg, uint8_t arg_int, void *a
             break;
 
         case U8X8_MSG_BYTE_END_TRANSFER:
-            I2C_GenerateSTOP(I2C1, ENABLE);
+            /* 非阻塞：一次性启动DMA，不在此等待或发送STOP */
+            if (i2c_tx_ctx.len && !i2c_tx_ctx.active) {
+                DMA_Cmd(DMA1_Channel6, DISABLE);
+                DMA_ClearFlag(DMA1_FLAG_GL6 | DMA1_FLAG_TC6 | DMA1_FLAG_HT6 | DMA1_FLAG_TE6);
+
+                DMA1_Channel6->CMAR  = (uint32_t)i2c_tx_ctx.buf;
+                DMA1_Channel6->CNDTR = i2c_tx_ctx.len;
+
+                i2c_tx_ctx.active = 1;
+                dma_transfer_complete = 0;
+
+                I2C_DMACmd(I2C1, ENABLE);
+                DMA_Cmd(DMA1_Channel6, ENABLE);
+            }
             break;
 
         default:

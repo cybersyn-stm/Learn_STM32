@@ -8,6 +8,8 @@ void RCC_init(void)//Systick = 72Mhz
 	RCC->CFGR |= 1<<16;
 	RCC->CFGR |= 1<<10;
 	SysTick->CTRL |= 1<<2;//SYSTICK USE HCLK
+
+	NVIC_SetPriority(SysTick_IRQn,0);//SYSTICK PRIORITY 0
 }
 void Systick_us(unsigned int time)
 {
