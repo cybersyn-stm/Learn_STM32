@@ -5,25 +5,25 @@
 #include "LINKLIST.h"
 #include "USART.h"
 #include <stdio.h>
+typedef enum {
+    KeyNull  = 0,
+    KeyDown  = 1,
+    KeyUp    = 2,
+    KeyEnter = 3
+} KeyState;
 u8g2_t u8g2;
 MenuItem *menuHead = NULL;//指向MenuItem结构体的指针
 void menuAction1(void)
 {
-    u8g2_SetFont(&u8g2, u8g2_font_7x13_te);//设置字体
-    u8g2_DrawStr(&u8g2, 0, 10, "Menu Item 1");//显示字符串
-    u8g2_SendBuffer(&u8g2);//发送缓冲区数据到
+
 }
 void menuAction2(void)
 {
-    u8g2_SetFont(&u8g2, u8g2_font_7x13_te);//设置字体
-    u8g2_DrawStr(&u8g2, 0, 30, "Menu Item 2");//显示字符串
-    u8g2_SendBuffer(&u8g2);//发送缓冲区数据到
+
 }
 void menuAction3(void)
 {
-    u8g2_SetFont(&u8g2, u8g2_font_7x13_te);//设置字体
-    u8g2_DrawStr(&u8g2, 0, 50, "Menu Item 3");//显示字符串
-    u8g2_SendBuffer(&u8g2);//发送缓冲区数据到
+
 }
 void menuConfig(MenuItem **menuHead)
 {
@@ -39,17 +39,32 @@ int main()
     menuConfig(&menuHead);
     while (1)
     {
-        uint8_t menuListIndex = 0;
+        uint8_t menuListIndex = 0, Arrow = 1;
+        KeyState key = KeyNull;
         MenuItem *current = menuHead;
         u8g2_ClearBuffer(&u8g2);
-        for (menuListIndex = 1; current != NULL; menuListIndex++, current = current->next)
+        for(menuListIndex = 1; current != NULL && menuListIndex *10 < 60; menuListIndex++, current = current->next)//遍历链表显示菜单项
         {
             // 使用 u8g2 显示节点的 name
             u8g2_DrawStr(&u8g2, 34, menuListIndex * 10, current->name);
+            u8g2_DrawStr(&u8g2, 0, Arrow * 10, ">"); // 显示箭头
+            if (menuListIndex == Arrow && key == KeyEnter)//如果选中了某一项并按下确认键
+            {
+                if (current->action != NULL)
+                {
+                    current->action(); // 执行对应的操作
+                }
+            }
+            if (Arrow == 60 && key == KeyDown)//链表下滑
+            {
+                SlideMenuItemList(menuHead, 1);
+            }
+            if (Arrow == 0 && key == KeyUp)//链表上滑
+            {
+                SlideMenuItemList(menuHead, -1);
+            }
         }
         u8g2_SendBuffer(&u8g2);
-        // 向右滑动 1 位
-        menuHead = SlideMenuItemList(menuHead, 1);
         Systick_ms(1000); // 延时 1 秒
     }
     

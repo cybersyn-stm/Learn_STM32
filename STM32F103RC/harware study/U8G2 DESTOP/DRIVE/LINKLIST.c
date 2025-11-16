@@ -38,14 +38,12 @@ MenuItem* SlideMenuItemList(MenuItem *head, int k) // 向右滑动 k 位
     k = k % n;
     if (k == 0) return head;
 
-    // 找到新的尾节点：位置为 n-k-1（0 基）
     int steps = n - k - 1;
-    MenuItem *newTail = head;//新尾节点指向head
-    for (int i = 0; i < steps; i++) newTail = newTail->next;//移动到新尾节点位置
+    MenuItem *newTail = head;
+    for (int i = 0; i < steps; i++) newTail = newTail->next;
 
-    MenuItem *newHead = newTail->next;//新头节点指向新尾节点的下一个节点
+    MenuItem *newHead = newTail->next;
 
-    // 断开并重连
     newTail->next = NULL;
     newHead->prev = NULL;
 
